@@ -1,5 +1,6 @@
 export function resetUI(phoneField, emailField, phoneInput, emailInput) {
   phoneField.style.display = "none";
+  
   emailField.style.display = "none";
   phoneInput.required = false;
   emailInput.required = false;
