@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <form class="auth-form" autocomplete="off">
+      <h2>Forgot Password</h2>
+
+      <div id="phoneField" class="field">
+        <label>Phone Number</label>
+        <div class="phone-container">
+          <select id="countryCode"></select>
+        </div>
+        <input type="text" id="phone" placeholder="Enter phone number" />
+        <small id="phoneError" class="error"></small>
+      </div>
+
+      <div id="emailField" class="field">
+        <label>Email ID</label>
+        <input type="email" id="email" placeholder="Enter email" />
+        <div id="resetError" class="error"></div>
+      </div>
+
+      <button type="submit">Submit</button>
+      <div id="resetSuccess" class="success"></div>
+
+      <p class="switch">
+        Remember your password?
+        <a href="login.html">Login</a>
+      </p>
+    </form>
+    
+    <script src="env.js"></script>
+    <script src="countries.js"></script>
+    <script src="validation.js"></script>
+    <script src="messages.js"></script>
+    <script type="module" src="forget.js"></script>
+
+  </body>
+</html>

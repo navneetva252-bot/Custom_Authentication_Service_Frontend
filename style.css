@@ -1,0 +1,147 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-form {
+  background: white;
+  padding: 25px;
+  width: 340px;
+  border-radius: 8px;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.5),
+    0 4px 10px rgba(0, 0, 0, 0.12);
+}
+.phone-container {
+  display: flex;
+  gap: 6px;
+}
+
+.phone-container select {
+  width: 110px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+}
+
+.phone-container input {
+  flex: 1;
+}
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.field input {
+  width: 95%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.field input:disabled {
+  background: #eee;
+  cursor: not-allowed;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #667eea;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #5a67d8;
+}
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+.asterik{
+    color: red;
+}
+.success {
+  color: green;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+.switch,
+.forgot {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.switch a,
+.forgot a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.switch a:hover,
+.forgot a:hover {
+  text-decoration: underline;
+}
+.password-field {
+  position: relative;
+}
+
+.password-field .toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 30px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.password-field .toggle-eye:hover {
+  opacity: 1;
+}
+
+input, select {
+  border: 1px solid #ccc;
+  outline: none;
+  padding: 10px;
+  border-radius: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+#countryCode {
+  min-width: 110px;
+  max-width: 400px;
+  padding: 6px 10px;
+}
+

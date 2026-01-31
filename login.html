@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <form class="auth-form" autocomplete="off">
+      <h2>Login</h2>
+
+      <div id="phoneField" class="field">
+        <label>Phone Number</label>
+        <div class="phone-container">
+          <select id="countryCode"></select>
+        </div>
+        <input type="text" id="phone" placeholder="Enter phone number" />
+        <small id="phoneError" class="error"></small>
+      </div>
+
+      <div id="emailField" class="field">
+        <label>Email ID</label>
+        <input type="email" id="email" placeholder="Enter email" />
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password" required />
+      </div>
+
+      <button type="submit">Login</button>
+      <div id="successMessage" class="success"></div>
+
+      <div id="loginError" class="error"></div>
+
+      <p class="switch">
+        Don’t have an account? <a href="index.html">Sign up</a>
+      </p>
+      <p class="forgot"><a href="forget.html">Forgot password?</a></p>
+    </form>
+
+    <script src="env.js"></script>
+    <script src="countries.js"></script>
+    <script src="validation.js"></script>
+    <script src="messages.js"></script>
+    <script type="module" src="login.js"></script>
+  </body>
+</html>
