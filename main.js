@@ -16,6 +16,7 @@ const phoneError = document.getElementById("phoneError");
 const form = document.querySelector(".auth-form");
 const usernameInput = document.getElementById("username");
 const usernameError = document.getElementById("usernameError");
+const phoneDropdown = document.getElementById("countryCode");
 
 const messages = window.messages;
 const strongPasswordRegex = window.strongPasswordRegex;
@@ -29,7 +30,7 @@ document.querySelectorAll(".toggle-eye").forEach(eye => {
 });
 
 
-applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput);
+applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput,phoneDropdown);
 initCountryDropdown(countries, countryCodeSelect, phoneInput, phoneError);
 initValidation({
   usernameInput,
@@ -62,5 +63,6 @@ initFormSubmit({
   emailRegex,
   applyAuthMode,
   AUTH_MODE,
+  phoneDropdown
 });
 

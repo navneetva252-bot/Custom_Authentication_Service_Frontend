@@ -11,6 +11,7 @@ export function initFormSubmit({
   emailRegex,
   applyAuthMode,
   AUTH_MODE,
+  phoneDropdown
 }) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ export function initFormSubmit({
     }
     if (
       !usernameInput.value ||
-      usernameInput.value.length < 3 ||
+      usernameInput.value.length < 2 ||
       usernameInput.value.length > 10 ||
       /\s/.test(usernameInput.value)
     ) {
@@ -68,6 +69,6 @@ export function initFormSubmit({
     emailInput.oninput = null;
     phoneInput.disabled = false;
     emailInput.disabled = false;
-    applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput);
+    applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput,phoneDropdown);
   });
 }

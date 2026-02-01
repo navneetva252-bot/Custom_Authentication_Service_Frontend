@@ -1,15 +1,26 @@
-export function resetUI(phoneField, emailField, phoneInput, emailInput) {
+export function resetUI(
+  phoneField,
+  emailField,
+  phoneInput,
+  emailInput,
+  phoneDropdown
+) {
   phoneField.style.display = "none";
-  
   emailField.style.display = "none";
+
   phoneInput.required = false;
   emailInput.required = false;
+
   phoneInput.disabled = false;
   emailInput.disabled = false;
+
   phoneInput.value = "";
   emailInput.value = "";
+
   phoneInput.oninput = null;
   emailInput.oninput = null;
+
+  if (phoneDropdown) phoneDropdown.disabled = false;
 }
 
 export function applyAuthMode(
@@ -17,33 +28,36 @@ export function applyAuthMode(
   phoneField,
   emailField,
   phoneInput,
-  emailInput
+  emailInput,
+  phoneDropdown
 ) {
-  resetUI(phoneField, emailField, phoneInput, emailInput);
+  resetUI(phoneField, emailField, phoneInput, emailInput, phoneDropdown);
 
   switch (mode) {
     case "PHONE":
       phoneField.style.display = "block";
       phoneInput.required = true;
       break;
+
     case "EMAIL":
       emailField.style.display = "block";
       emailInput.required = true;
       break;
+
     case "BOTH":
       phoneField.style.display = "block";
       emailField.style.display = "block";
       phoneInput.required = true;
       emailInput.required = true;
       break;
+
     case "EITHER":
       phoneField.style.display = "block";
       emailField.style.display = "block";
       phoneInput.required = true;
       emailInput.required = true;
-      phoneInput.oninput = null;
-      emailInput.oninput = null;
 
+      // PHONE → EMAIL disable
       phoneInput.oninput = () => {
         if (phoneInput.value.trim() !== "") {
           emailInput.value = "";
@@ -53,15 +67,19 @@ export function applyAuthMode(
         }
       };
 
+      // EMAIL → PHONE + DROPDOWN disable
       emailInput.oninput = () => {
         if (emailInput.value.trim() !== "") {
           phoneInput.value = "";
           phoneInput.disabled = true;
+          if (phoneDropdown) phoneDropdown.disabled = true;
         } else {
           phoneInput.disabled = false;
+          if (phoneDropdown) phoneDropdown.disabled = false;
         }
       };
       break;
+
     default:
       console.error("Invalid AUTH_MODE");
   }

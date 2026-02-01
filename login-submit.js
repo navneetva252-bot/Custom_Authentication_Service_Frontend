@@ -1,5 +1,5 @@
 
-export function initFormSubmit({ form,  phoneInput, emailInput, passwordInput, countryCodeSelect, messages, emailRegex, applyAuthMode, AUTH_MODE }) {
+export function initFormSubmit({ form,  phoneInput, emailInput, passwordInput, countryCodeSelect, messages, emailRegex, applyAuthMode, AUTH_MODE ,phoneDropdown}) {
   form.addEventListener("submit", e => {
     e.preventDefault();
     const successMessage = document.getElementById("successMessage");
@@ -30,6 +30,6 @@ export function initFormSubmit({ form,  phoneInput, emailInput, passwordInput, c
     emailInput.oninput = null;
     phoneInput.disabled = false;
     emailInput.disabled = false;
-    applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput);
+    applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput,phoneDropdown);
   });
 }

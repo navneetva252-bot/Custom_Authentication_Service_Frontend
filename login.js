@@ -1,4 +1,4 @@
-import { applyAuthMode } from "./auth-mode.js";
+import { applyAuthMode} from "./auth-mode.js";
 import { initCountryDropdown } from "./country-dropdown.js";
 import { initValidation } from "./login-validate.js";
 import { initFormSubmit } from "./login-submit.js";
@@ -13,12 +13,20 @@ const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const phoneError = document.getElementById("phoneError");
 const form = document.querySelector(".auth-form");
+const phoneDropdown = document.getElementById("countryCode");
 
 const messages = window.messages;
 const emailRegex = window.emailRegex;
 const countries = window.countries;
 
-applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput);
+applyAuthMode(
+  AUTH_MODE,
+  phoneField,
+  emailField,
+  phoneInput,
+  emailInput,
+  phoneDropdown
+);
 initCountryDropdown(countries, countryCodeSelect, phoneInput, phoneError);
 initValidation({
   phoneInput,
@@ -27,7 +35,7 @@ initValidation({
   countryCodeSelect,
   phoneError,
   messages,
-  emailRegex
+  emailRegex,
 });
 
 initFormSubmit({
@@ -40,4 +48,5 @@ initFormSubmit({
   emailRegex,
   applyAuthMode,
   AUTH_MODE,
+  phoneDropdown
 });
