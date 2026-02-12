@@ -11,7 +11,7 @@ export function initFormSubmit({
   emailRegex,
   applyAuthMode,
   AUTH_MODE,
-  phoneDropdown
+  phoneDropdown,
 }) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -59,16 +59,23 @@ export function initFormSubmit({
       ? countryCodeSelect.value + phoneInput.value.trim()
       : "";
     console.log("Final Phone:", finalPhoneNumber);
-    alert(messages.submitSuccess);
-    usernameInput.value = "";
-    phoneInput.value = "";
-    emailInput.value = "";
-    passwordInput.value = "";
-    confirmInput.value = "";
-    phoneInput.oninput = null;
-    emailInput.oninput = null;
-    phoneInput.disabled = false;
-    emailInput.disabled = false;
-    applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput,phoneDropdown);
+    // Decide OTP delivery mode
+    let otpDeliveryMode = "PHONE";
+
+    if (AUTH_MODE === "EMAIL") otpDeliveryMode = "EMAIL";
+    else if (AUTH_MODE === "PHONE") otpDeliveryMode = "PHONE";
+    else if (AUTH_MODE === "EITHER") {
+      otpDeliveryMode = emailInput.value ? "EMAIL" : "PHONE";
+    }
+    // BOTH case → SMS only
+    else if (AUTH_MODE === "BOTH") otpDeliveryMode = "PHONE";
+
+    // Store data for OTP page
+    localStorage.setItem("otpDeliveryMode", otpDeliveryMode);
+    localStorage.setItem("signupEmail", emailInput.value || "");
+    localStorage.setItem("signupPhone", finalPhoneNumber || "");
+
+    // 🔥 redirect
+    window.location.href = "otp.html";
   });
 }

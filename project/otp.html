@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verify OTP</title>
+  <link rel="stylesheet" href="otp.css" />
+</head>
+<body>
+
+  <div class="auth-box">
+    <h2>Verify OTP</h2>
+    <p id="otpMessage">OTP has been sent to your registered email/phone</p>
+    <p id="otpTimer" class="timer"></p>
+
+    <div class="otp-container">
+      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" />
+      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" />
+      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" />
+      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" />
+      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" />
+      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" />
+    </div>
+    <small id="otpError" class="error"></small>
+
+    <button id="verifyOtpBtn">Verify OTP</button>
+    <div id="otpSuccess" class="success"></div>
+    <p class="switch">
+      Didn't receive OTP? <span id="resendOtp" class="resend-btn">Resend</span>
+
+    </p>
+  </div>
+
+  <script type="module" src="otp.js"></script>
+</body>
+</html>
