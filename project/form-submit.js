@@ -13,14 +13,17 @@ export function initFormSubmit({
   AUTH_MODE,
   phoneDropdown,
 }) {
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const successMessage = document.getElementById("successMessage");
     const passwordError = document.getElementById("passwordError");
     const confirmError = document.getElementById("confirmError");
+    const submitBtn = form.querySelector("button[type='submit']");
 
     successMessage.textContent = "";
+    passwordError.textContent = "";
+    confirmError.textContent = "";
 
     if (!strongPasswordRegex.test(passwordInput.value)) {
       passwordError.textContent = messages.passwordWeak;
@@ -45,37 +48,92 @@ export function initFormSubmit({
       alert(messages.emailInvalid);
       return;
     }
+
     if (
       !usernameInput.value ||
       usernameInput.value.length < 2 ||
-      usernameInput.value.length > 10 ||
+      usernameInput.value.length > 20 ||
       /\s/.test(usernameInput.value)
     ) {
       alert(messages.nameInvalid);
       return;
     }
 
-    const finalPhoneNumber = phoneInput.value
-      ? countryCodeSelect.value + phoneInput.value.trim()
-      : "";
-    console.log("Final Phone:", finalPhoneNumber);
-    // Decide OTP delivery mode
-    let otpDeliveryMode = "PHONE";
+    const countryCode = countryCodeSelect.value.replace("+", "");
+    const localNumber = phoneInput.value.trim();
 
-    if (AUTH_MODE === "EMAIL") otpDeliveryMode = "EMAIL";
-    else if (AUTH_MODE === "PHONE") otpDeliveryMode = "PHONE";
-    else if (AUTH_MODE === "EITHER") {
-      otpDeliveryMode = emailInput.value ? "EMAIL" : "PHONE";
+    const requestBody = {
+      firstName: usernameInput.value.trim(),
+      password: passwordInput.value,
+    };
+
+    if (emailInput.value) requestBody.email = emailInput.value.trim();
+    if (localNumber) {
+      requestBody.countryCode = countryCode;
+      requestBody.localNumber = localNumber;
+      requestBody.phone = `+${countryCode}${localNumber}`;
     }
-    // BOTH case → SMS only
-    else if (AUTH_MODE === "BOTH") otpDeliveryMode = "PHONE";
 
-    // Store data for OTP page
-    localStorage.setItem("otpDeliveryMode", otpDeliveryMode);
-    localStorage.setItem("signupEmail", emailInput.value || "");
-    localStorage.setItem("signupPhone", finalPhoneNumber || "");
+    const API_BASE = window.RUNTIME_ENV.API_BASE_URL;
+    const deviceUUID = getDeviceUUID();
 
-    // 🔥 redirect
-    window.location.href = "otp.html";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating Account...";
+
+    try {
+      const res = await fetch(`${API_BASE}/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-uuid": deviceUUID,
+          "x-device-name": getDeviceName(),
+          "x-device-type": getDeviceType(),
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        successMessage.textContent = "";
+        alert(data.message || "Signup failed. Please try again.");
+        return;
+      }
+
+      // Store for OTP page
+      const contactMode = data.data?.contactMode || (emailInput.value ? "EMAIL" : "PHONE");
+      localStorage.setItem("otpDeliveryMode", contactMode);
+      localStorage.setItem("otpPurpose", "EMAIL_VERIFICATION");
+      localStorage.setItem("signupEmail", emailInput.value || "");
+      localStorage.setItem("signupPhone", localNumber ? `+${countryCode}${localNumber}` : "");
+
+      window.location.href = "otp.html";
+
+    } catch (err) {
+      alert("Network error. Please check your connection.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Create Account";
+    }
   });
+}
+
+function getDeviceUUID() {
+  let uuid = localStorage.getItem("deviceUUID");
+  if (!uuid) {
+    uuid = crypto.randomUUID();
+    localStorage.setItem("deviceUUID", uuid);
+  }
+  return uuid;
+}
+
+function getDeviceName() {
+  return navigator.userAgent.split(")")[0].split("(")[1] || "Browser";
+}
+
+function getDeviceType() {
+  const ua = navigator.userAgent.toLowerCase();
+  if (/mobile|android|iphone/.test(ua)) return "MOBILE";
+  if (/tablet|ipad/.test(ua)) return "TABLET";
+  return "LAPTOP";
 }
