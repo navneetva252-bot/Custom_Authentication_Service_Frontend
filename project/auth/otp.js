@@ -8,7 +8,7 @@ const otpMessage = document.getElementById("otpMessage");
 const otpTimerEl = document.getElementById("otpTimer");
 
 // ===== State =====
-let otpTimeLeft = 120;
+let otpTimeLeft = 600; // 10 minutes default, will be reset by timer on load
 let otpInterval;
 let resendInterval;
 let canResend = true;
@@ -61,12 +61,24 @@ otpBoxes.forEach((box, idx) => {
       otpBoxes[idx - 1].focus();
     }
   });
+
+  box.addEventListener("paste", (e) => {
+    e.preventDefault();
+    const pasted = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "");
+    if (pasted.length <= 6) {
+      otpBoxes.forEach((b, i) => {
+        b.value = pasted[i] || "";
+      });
+      otpBoxes[Math.min(pasted.length, 5)].focus();
+      handleOtpChange();
+    }
+  });
 });
 
 // ===== OTP Expiry Timer =====
 function startOtpTimer() {
   clearInterval(otpInterval);
-  otpTimeLeft = 120;
+  otpTimeLeft = 600; // Reset to 10 minutes on each resend
 
   // Reset verify button only if it's not mid-request
   if (verifyBtn.textContent !== "Verifying...") {
@@ -98,7 +110,9 @@ function getDeviceUUID() {
 }
 
 // ===== Verify OTP (API call) =====
-verifyBtn.addEventListener("click", async () => {
+const otpForm = document.getElementById("otpForm");
+otpForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
   const otp = [...otpBoxes].map((b) => b.value).join("");
 
   if (!/^\d{6}$/.test(otp)) {
@@ -153,7 +167,7 @@ verifyBtn.addEventListener("click", async () => {
     if (!res.ok || !data.success) {
       otpError.textContent = data.message || "Invalid OTP. Please try again.";
       verifyBtn.disabled = false;
-      verifyBtn.textContent = "Verify OTP";
+      verifyBtn.textContent = "Verify OTP ✓";
       return;
     }
 
@@ -177,7 +191,7 @@ verifyBtn.addEventListener("click", async () => {
   } catch (err) {
     otpError.textContent = "Network error. Please check your connection.";
     verifyBtn.disabled = false;
-    verifyBtn.textContent = "Verify OTP";
+    verifyBtn.textContent = "Verify OTP ✓";
   }
 });
 
@@ -186,7 +200,9 @@ resendBtn.addEventListener("click", async () => {
   if (!canResend) return;
 
   canResend = false;
-  resendBtn.classList.add("disabled");
+  resendBtn.style.pointerEvents = "none";
+  resendBtn.style.opacity = "0.5";
+  const originalText = resendBtn.textContent;
   resendBtn.textContent = "Resending...";
   if (resendInterval) clearInterval(resendInterval);
 
@@ -219,8 +235,9 @@ resendBtn.addEventListener("click", async () => {
 
     if (!res.ok || !data.success) {
       otpError.textContent = data.message || "Could not resend OTP.";
-      resendBtn.classList.remove("disabled");
-      resendBtn.textContent = "Resend";
+      resendBtn.style.pointerEvents = "auto";
+      resendBtn.style.opacity = "1";
+      resendBtn.textContent = originalText;
       canResend = true;
       return;
     }
@@ -231,8 +248,9 @@ resendBtn.addEventListener("click", async () => {
 
   } catch (err) {
     otpError.textContent = "Network error. Could not resend OTP.";
-    resendBtn.classList.remove("disabled");
-    resendBtn.textContent = "Resend";
+    resendBtn.style.pointerEvents = "auto";
+    resendBtn.style.opacity = "1";
+    resendBtn.textContent = originalText;
     canResend = true;
     return;
   }
@@ -247,8 +265,9 @@ resendBtn.addEventListener("click", async () => {
 
     if (timeLeft <= 0) {
       clearInterval(resendInterval);
-      resendBtn.textContent = "Resend";
-      resendBtn.classList.remove("disabled");
+      resendBtn.textContent = "Resend OTP";
+      resendBtn.style.pointerEvents = "auto";
+      resendBtn.style.opacity = "1";
       canResend = true;
     }
   }, 1000);

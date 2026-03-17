@@ -1,0 +1,279 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating blobs */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+  animation: blob 8s ease-in-out infinite alternate;
+}
+body::before {
+  width: 400px; height: 400px;
+  background: #667eea;
+  top: -100px; left: -100px;
+}
+body::after {
+  width: 350px; height: 350px;
+  background: #f093fb;
+  bottom: -100px; right: -80px;
+  animation-delay: 2s;
+}
+@keyframes blob {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.15) translate(30px, 20px); }
+}
+
+.page-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 960px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Left branding panel */
+.brand-panel {
+  flex: 1;
+  color: white;
+  display: none;
+}
+@media (min-width: 820px) { .brand-panel { display: block; } }
+
+.brand-panel .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.brand-panel .logo-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, #667eea, #f093fb);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.brand-panel .logo-name {
+  font-size: 22px; font-weight: 700; letter-spacing: -0.5px;
+}
+.brand-panel h1 {
+  font-size: 38px; font-weight: 700; line-height: 1.2;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #fff, #c4b5fd);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.brand-panel p {
+  font-size: 15px; color: rgba(255,255,255,0.6);
+  line-height: 1.7; margin-bottom: 36px;
+}
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.feature-list li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: rgba(255,255,255,0.75);
+}
+.feature-list li .icon {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* Card */
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+  animation: slideUp 0.5s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-header { text-align: center; margin-bottom: 28px; }
+.card-header h2 {
+  font-size: 26px; font-weight: 700; color: #fff;
+  letter-spacing: -0.5px;
+}
+.card-header p {
+  font-size: 13px; color: rgba(255,255,255,0.5);
+  margin-top: 6px;
+}
+
+/* OTP Container */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+.otp-box {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.otp-box:focus {
+  border-color: #667eea;
+  background: rgba(102,126,234,0.1);
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+}
+
+.otp-box::-webkit-outer-spin-button,
+.otp-box::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+/* Messages */
+.otp-message {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.otp-timer {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fbbf24;
+  margin: 12px 0;
+  min-height: 18px;
+}
+
+small.error {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: #fca5a5;
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-top: 8px;
+}
+small.error:empty { display: none; }
+
+.success-message {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4ade80;
+  background: rgba(34,197,80,0.12);
+  border: 1px solid rgba(34,197,80,0.25);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-top: 8px;
+}
+.success-message:empty { display: none; }
+
+/* Button */
+.btn-primary {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(102,126,234,0.4);
+  letter-spacing: 0.3px;
+}
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(102,126,234,0.5);
+}
+.btn-primary:active:not(:disabled) { transform: translateY(0); }
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Resend OTP */
+.resend-section {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+
+.resend-btn {
+  color: #a78bfa;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.resend-btn:hover {
+  color: #c4b5fd;
+  text-decoration: underline;
+}
+
+.resend-btn:disabled {
+  color: rgba(255,255,255,0.3);
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+}
+.switch-link a {
+  color: #a78bfa;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.switch-link a:hover {
+  color: #c4b5fd;
+  text-decoration: underline;
+}

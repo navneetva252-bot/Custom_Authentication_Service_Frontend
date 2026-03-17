@@ -1,37 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verify OTP</title>
-  <link rel="stylesheet" href="../otp.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify OTP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="otp.css" />
+  </head>
+  <body>
+    <div class="page-wrapper">
 
-  <div class="auth-box">
-    <h2>Verify OTP</h2>
-    <p id="otpMessage">OTP has been sent to your registered email/phone</p>
-    <p id="otpTimer" class="timer"></p>
+      <!-- Left brand panel -->
+      <div class="brand-panel">
+        <div class="logo">
+          <div class="logo-icon">🔐</div>
+          <span class="logo-name">AuthService</span>
+        </div>
+        <h1>Security<br/>First.</h1>
+        <p>Two-factor authentication protects your account from unauthorized access. Enter the 6-digit code sent to your registered email or phone.</p>
+        <ul class="feature-list">
+          <li><div class="icon">⚡</div> Time-sensitive OTP for maximum security</li>
+          <li><div class="icon">📱</div> Sent to your registered device</li>
+          <li><div class="icon">🔔</div> Auto-resend if needed</li>
+          <li><div class="icon">✅</div> Instant verification</li>
+        </ul>
+      </div>
 
-    <div class="otp-container">
-      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 1" />
-      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 2" />
-      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 3" />
-      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 4" />
-      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 5" />
-      <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 6" />
+      <!-- OTP card -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Verify Your Identity</h2>
+          <p>Enter the 6-digit code sent to you</p>
+        </div>
+
+        <form class="auth-form" id="otpForm" autocomplete="off">
+
+          <!-- OTP Message -->
+          <p class="otp-message" id="otpMessage">OTP has been sent to your registered email/phone</p>
+
+          <!-- OTP Input boxes -->
+          <div class="otp-container">
+            <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 1" />
+            <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 2" />
+            <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 3" />
+            <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 4" />
+            <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 5" />
+            <input type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" class="otp-box" aria-label="OTP digit 6" />
+          </div>
+
+          <!-- Timer and Error -->
+          <p class="otp-timer" id="otpTimer"></p>
+          <small id="otpError" class="error"></small>
+
+          <!-- Verify Button -->
+          <button type="submit" id="verifyOtpBtn" class="btn-primary">Verify OTP ✓</button>
+
+          <!-- Success Message -->
+          <div id="otpSuccess" class="success-message"></div>
+        </form>
+
+        <!-- Resend OTP -->
+        <div class="resend-section">
+          Didn't receive the code? <span id="resendOtp" class="resend-btn">Resend OTP</span>
+        </div>
+
+        <div class="switch-link">
+          <a href="login.html">← Back to Login</a>
+        </div>
+      </div>
     </div>
-    <small id="otpError" class="error"></small>
 
-    <button id="verifyOtpBtn">Verify OTP</button>
-    <div id="otpSuccess" class="success"></div>
-    <p class="switch">
-      Didn't receive OTP? <span id="resendOtp" class="resend-btn">Resend</span>
+    <script src="../env.js"></script>
+    <script src="otp.js"></script>
 
-    </p>
-  </div>
-
-  <script src="../env.js"></script>
-  <script type="module" src="otp.js"></script>
-</body>
+  </body>
 </html>

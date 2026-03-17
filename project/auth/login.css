@@ -1,0 +1,297 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating blobs - different animation speed for variety */
+body::before, body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  pointer-events: none;
+  animation: blobSlow 15s ease-in-out infinite alternate;
+}
+body::before {
+  width: 350px; height: 350px;
+  background: #764ba2;
+  top: -50px; left: -150px;
+}
+body::after {
+  width: 300px; height: 300px;
+  background: #667eea;
+  bottom: -80px; right: -100px;
+  animation-delay: 3s;
+}
+@keyframes blobSlow {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.1) translate(20px, 15px); }
+}
+
+.page-wrapper {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Card - Compact, centered */
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 48px 40px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+  animation: slideUp 0.5s ease;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-header { text-align: center; margin-bottom: 36px; }
+.card-header .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.card-header .logo-icon {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, #667eea, #f093fb);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.card-header .logo-name {
+  font-size: 20px; font-weight: 700; color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.card-header h2 {
+  font-size: 28px; font-weight: 700; color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.card-header p {
+  font-size: 13px; color: rgba(255,255,255,0.5);
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Fields */
+.field { 
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field input, .field select {
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.field input::placeholder { color: rgba(255,255,255,0.25); }
+
+.field input:focus, .field select:focus {
+  border-color: #667eea;
+  background: rgba(102,126,234,0.1);
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+}
+
+.field select option { background: #302b63; color: #fff; }
+
+/* Phone row */
+.phone-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.phone-container select {
+  width: 130px;
+  flex-shrink: 0;
+  padding: 12px 10px;
+}
+
+.field input[type="text"] {
+  flex: 1;
+}
+
+#phoneError {
+  margin-top: 8px !important;
+  display: block !important;
+}
+
+/* Password field */
+.password-field {
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.password-field small.error {
+  margin-top: 8px;
+}
+
+/* Error messages */
+small.error {
+  display: block;
+  font-size: 12px;
+  color: #ff6b6b;
+  background: rgba(255,107,107,0.15);
+  border: 1.5px solid rgba(255,107,107,0.4);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-top: 6px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+small.error:empty { display: none; }
+
+#loginError {
+  text-align: center;
+  color: #ff6b6b;
+  background: rgba(255,107,107,0.15);
+  border: 1.5px solid rgba(255,107,107,0.4);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5;
+}
+#loginError:empty { display: none; }
+
+/* Success message */
+#successMessage {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #51cf66;
+  background: rgba(81,207,102,0.15);
+  border: 1.5px solid rgba(81,207,102,0.4);
+  border-radius: 8px;
+  padding: 10px 12px;
+  min-height: 18px;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+#successMessage:empty { display: none; }
+
+/* Button */
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(102,126,234,0.4);
+  letter-spacing: 0.3px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(102,126,234,0.5);
+}
+
+button[type="submit"]:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Links section */
+.links-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.links-section a {
+  color: #a78bfa;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.links-section a:hover {
+  color: #c4b5fd;
+  text-decoration: underline;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: rgba(255,255,255,0.5);
+}
+
+.switch a {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.forgot a {
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+.forgot a:hover {
+  color: #fcd34d;
+  text-decoration: underline;
+}
