@@ -4,45 +4,268 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../dashboard.css" />
   </head>
   <body class="dashboard-body">
+    <script>
+      // Catch all errors
+      window.addEventListener('error', (event) => {
+        console.error("❌ RUNTIME ERROR:", event.message);
+        console.error("   - File:", event.filename);
+        console.error("   - Line:", event.lineno);
+        console.error("   - Col:", event.colno);
+      });
+      
+      window.addEventListener('unhandledrejection', (event) => {
+        console.error("❌ UNHANDLED PROMISE REJECTION:", event.reason);
+      });
+      
+      console.log("✅ Error handlers installed");
+      
+      // Check if DOM is ready
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log("📋 DOMContentLoaded fired");
+        const container = document.querySelector('.dash-container');
+        console.log("   - dash-container found:", !!container);
+        console.log("   - dash-container visible:", container ? container.offsetHeight > 0 : "N/A");
+        console.log("   - Body background:", window.getComputedStyle(document.body).background);
+      });
+      
+      // Visibility check after delay
+      window.addEventListener('load', () => {
+        console.log("📋 Page fully loaded");
+        setTimeout(() => {
+          const header = document.querySelector('.dash-header');
+          if (header) {
+            const style = window.getComputedStyle(header);
+            console.log("   - Header display:", style.display);
+            console.log("   - Header visibility:", style.visibility);
+            console.log("   - Header height:", style.height);
+          }
+        }, 500);
+      });
+    </script>
+    
     <div class="dash-container">
 
+      <!-- Welcome Header -->
       <header class="dash-header">
-        <h1>My Account</h1>
-        <div class="dash-nav">
-          <button id="signoutBtn" class="btn-danger">Sign Out</button>
+        <div class="header-content">
+          <h1 class="header-title">
+            <span class="material-icons header-icon">dashboard</span>
+            Dashboard
+          </h1>
+          <p class="header-subtitle" id="welcomeMsg">Welcome back! Manage your account securely</p>
         </div>
+        <button id="signoutBtn" class="btn-signout">
+          <span class="material-icons">logout</span>
+          Sign Out
+        </button>
       </header>
 
-      <div class="dash-grid">
+      <!-- Account Info Section -->
+      <div class="account-section">
+        <div class="account-card" id="accountCard">
+          <div class="account-header">
+            <span class="material-icons account-icon">person</span>
+            <h2>Account Information</h2>
+            <span id="accountStatus" class="status-badge">Loading...</span>
+          </div>
+          <div id="accountInfo" class="account-info">Loading...</div>
+        </div>
+      </div>
 
-        <!-- Account Info Card -->
-        <div class="card" id="accountCard">
-          <h3>Account Details</h3>
-          <div id="accountInfo">Loading...</div>
+      <!-- Account Health Section -->
+      <div class="health-section">
+        <div class="health-card">
+          <div class="health-header">
+            <div class="health-title">
+              <span class="material-icons health-icon">health_and_safety</span>
+              <div>
+                <h3>Account Health</h3>
+                <p>Your security score</p>
+              </div>
+            </div>
+            <span class="health-score" id="healthScore">85%</span>
+          </div>
+          <div class="health-bar">
+            <div class="health-progress" id="healthProgress" style="width: 85%;"></div>
+          </div>
+          <div class="health-tips">
+            <div class="tip-item">
+              <span class="material-icons tip-icon">check_circle</span>
+              <span>Email verified</span>
+            </div>
+            <div class="tip-item" id="twoFATip" style="cursor: pointer; background: rgba(240, 147, 251, 0.1) !important; border-left: 2px solid #f093fb;">
+              <span class="material-icons tip-icon" style="color: #fbbf24;">info</span>
+              <span>Enable 2FA for extra security</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics Grid -->
+      <div class="metrics-grid">
+
+        <!-- Account Stats Card -->
+        <div class="metric-card stats-card">
+          <div class="metric-header">
+            <span class="material-icons metric-icon">analytics</span>
+            <h3>Account Stats</h3>
+          </div>
+          <div class="metric-body">
+            <div class="stat-item">
+              <p class="stat-label">Active Sessions</p>
+              <p class="stat-value" id="sessionsCount">0</p>
+            </div>
+            <div class="stat-item">
+              <p class="stat-label">Last Login</p>
+              <p class="stat-value" id="lastLogin">-</p>
+            </div>
+          </div>
         </div>
 
-        <!-- Quick Links Card -->
-        <div class="card">
-          <h3>Navigation</h3>
-          <ul class="quick-links">
-            <li><a href="sessions.html">🖥️ Active Sessions</a></li>
-            <li><a href="auth-logs.html">📋 Auth Logs</a></li>
-            <li><a href="settings.html">⚙️ Account Settings</a></li>
-          </ul>
+        <!-- Account Age Card -->
+        <div class="metric-card age-card">
+          <div class="metric-header">
+            <span class="material-icons metric-icon">calendar_today</span>
+            <h3>Account Age</h3>
+          </div>
+          <div class="metric-body">
+            <p class="metric-label">Member Since</p>
+            <p class="metric-value" id="createdDate">-</p>
+          </div>
         </div>
 
       </div>
 
-      <div id="dashError" class="error" style="text-align:center;margin-top:20px;font-size:14px;"></div>
+      <!-- Quick Actions Grid -->
+      <div class="quick-actions-section">
+        <h3 class="section-title">
+          <span class="material-icons">explore</span>
+          Quick Navigation
+        </h3>
+        <div class="actions-grid">
+          
+          <!-- Active Sessions Card -->
+          <a href="sessions.html" class="action-card sessions-card">
+            <div class="action-icon sessions-icon">
+              <span class="material-icons">devices</span>
+            </div>
+            <div class="action-content">
+              <h4>Active Sessions</h4>
+              <p>View and manage your devices</p>
+            </div>
+            <span class="material-icons action-arrow">arrow_forward</span>
+          </a>
+
+          <!-- Auth Logs Card -->
+          <a href="auth-logs.html" class="action-card logs-card">
+            <div class="action-icon logs-icon">
+              <span class="material-icons">history</span>
+            </div>
+            <div class="action-content">
+              <h4>Auth Logs</h4>
+              <p>Check login activity history</p>
+            </div>
+            <span class="material-icons action-arrow">arrow_forward</span>
+          </a>
+
+          <!-- Settings Card -->
+          <a href="settings.html" class="action-card settings-card">
+            <div class="action-icon settings-icon">
+              <span class="material-icons">settings</span>
+            </div>
+            <div class="action-content">
+              <h4>Account Settings</h4>
+              <p>Manage security & preferences</p>
+            </div>
+            <span class="material-icons action-arrow">arrow_forward</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Quick Tips Section -->
+      <div class="tips-section">
+        <h3 class="section-title">
+          <span class="material-icons">lightbulb</span>
+          Security Tips
+        </h3>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <span class="material-icons tip-icon">check_circle</span>
+            <h4>Enable 2FA</h4>
+            <p>Add an extra layer of protection to your account</p>
+          </div>
+          <div class="tip-card">
+            <span class="material-icons tip-icon">check_circle</span>
+            <h4>Strong Passwords</h4>
+            <p>Use unique passwords for important accounts</p>
+          </div>
+          <div class="tip-card">
+            <span class="material-icons tip-icon">check_circle</span>
+            <h4>Check Activities</h4>
+            <p>Review your login history regularly</p>
+          </div>
+          <div class="tip-card">
+            <span class="material-icons tip-icon">check_circle</span>
+            <h4>Verify Devices</h4>
+            <p>Sign out from unused devices</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error & Success Messages -->
+      <div id="dashError" class="error"></div>
       <div id="dashSuccess" class="success"></div>
 
     </div>
 
+    <script>
+      // Immediate startup check
+      console.log("✅ HTML Loaded - Page starting...");
+      console.log("🌐 Document readyState:", document.readyState);
+      console.log("📍 Current URL:", window.location.href);
+      
+      // Check if styles loaded
+      const styles = document.styleSheets;
+      console.log("📋 Stylesheets loaded:", styles.length);
+      for (let i = 0; i < styles.length; i++) {
+        console.log("   -", styles[i].href || "inline");
+      }
+      
+      // Check if elements exist
+      console.log("🔍 DOM Elements Check:");
+      console.log("   - accountInfo:", !!document.getElementById("accountInfo"));
+      console.log("   - accountStatus:", !!document.getElementById("accountStatus"));
+      console.log("   - dashError:", !!document.getElementById("dashError"));
+    </script>
+    
     <script src="../env.js"></script>
+    <script>
+      console.log("✅ env.js loaded");
+      console.log("   - RUNTIME_ENV:", window.RUNTIME_ENV);
+      if (window.RUNTIME_ENV) {
+        console.log("   - API_BASE_URL:", window.RUNTIME_ENV.API_BASE_URL);
+      } else {
+        console.error("❌ RUNTIME_ENV not defined!");
+      }
+    </script>
+    
     <script src="dashboard.js"></script>
+    <script>
+      // Final check after scripts load
+      console.log("✅ dashboard.js loaded");
+      setTimeout(() => {
+        console.log("📊 Page Load Complete - All scripts initialized");
+        console.log("   - loadAccount function exists:", typeof loadAccount === 'function');
+      }, 300);
+    </script>
   </body>
 </html>
