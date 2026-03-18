@@ -38,6 +38,160 @@ function saveNewToken(res) {
   }
 }
 
+// ===== NOTIFICATIONS SYSTEM =====
+let notifications = [
+  {
+    id: 1,
+    type: "success",
+    title: "Welcome Back!",
+    message: "Your account is secure and ready to use.",
+    time: "Just now",
+    read: false
+  },
+  {
+    id: 2,
+    type: "info",
+    title: "Security Update",
+    message: "Your account health score is 65%. Enable 2FA for better security.",
+    time: "2 hours ago",
+    read: false
+  },
+  {
+    id: 3,
+    type: "warning",
+    title: "New Login",
+    message: "New login detected from Chrome on Windows. If this wasn't you, secure your account.",
+    time: "5 hours ago",
+    read: true
+  }
+];
+
+function setupNotificationPanel() {
+  const overlay = document.getElementById("notificationsOverlay");
+  const closeBtn = document.getElementById("closeNotifications");
+  const clearAllBtn = document.getElementById("clearAllNotifications");
+  
+  if (overlay) {
+    overlay.addEventListener("click", closeNotificationPanel);
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeNotificationPanel);
+  }
+  
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      clearAllNotifications();
+    });
+  }
+  
+  renderNotifications();
+  updateNotificationBadge();
+}
+
+function toggleNotificationPanel() {
+  const panel = document.getElementById("notificationsPanel");
+  const overlay = document.getElementById("notificationsOverlay");
+  
+  panel.classList.toggle("active");
+  overlay.classList.toggle("active");
+  
+  if (panel.classList.contains("active")) {
+    markAllAsRead();
+    updateNotificationBadge();
+  }
+}
+
+function closeNotificationPanel() {
+  const panel = document.getElementById("notificationsPanel");
+  const overlay = document.getElementById("notificationsOverlay");
+  
+  panel.classList.remove("active");
+  overlay.classList.remove("active");
+}
+
+function renderNotifications() {
+  const notificationsList = document.getElementById("notificationsList");
+  
+  if (!notificationsList) return;
+  
+  if (notifications.length === 0) {
+    notificationsList.innerHTML = `
+      <div class="notifications-empty">
+        <span class="material-icons">notifications_none</span>
+        <p>No notifications yet</p>
+      </div>
+    `;
+    return;
+  }
+  
+  notificationsList.innerHTML = notifications.map(notif => `
+    <div class="notification-item ${!notif.read ? 'unread' : ''}" data-id="${notif.id}">
+      <div class="notification-icon ${notif.type}">
+        <span class="material-icons" style="font-size: 20px;">
+          ${getNotificationIcon(notif.type)}
+        </span>
+      </div>
+      <div class="notification-content">
+        <h4 class="notification-title">${notif.title}</h4>
+        <p class="notification-message">${notif.message}</p>
+        <p class="notification-time">${notif.time}</p>
+      </div>
+    </div>
+  `).join("");
+  
+  // Add event listeners for dismissal
+  document.querySelectorAll(".notification-item").forEach(item => {
+    item.addEventListener("click", function() {
+      const id = parseInt(this.dataset.id);
+      dismissNotification(id);
+    });
+  });
+}
+
+function getNotificationIcon(type) {
+  const icons = {
+    success: "check_circle",
+    warning: "warning",
+    error: "error",
+    info: "info"
+  };
+  return icons[type] || "notifications";
+}
+
+function dismissNotification(id) {
+  notifications = notifications.filter(n => n.id !== id);
+  renderNotifications();
+  updateNotificationBadge();
+}
+
+function clearAllNotifications() {
+  notifications = [];
+  renderNotifications();
+  updateNotificationBadge();
+  closeNotificationPanel();
+}
+
+function markAllAsRead() {
+  notifications.forEach(n => n.read = true);
+  renderNotifications();
+}
+
+function updateNotificationBadge() {
+  const badge = document.getElementById("notificationBadge");
+  const unreadCount = notifications.filter(n => !n.read).length;
+  
+  if (badge) {
+    if (unreadCount === 0) {
+      badge.style.display = "none";
+    } else {
+      badge.style.display = "flex";
+      badge.textContent = unreadCount > 9 ? "9+" : unreadCount;
+    }
+  }
+}
+
 // ===== Load Account Details =====
 async function loadAccount() {
   const accountInfo = document.getElementById("accountInfo");
@@ -285,9 +439,15 @@ async function loadAccount() {
     // Load active sessions count
     loadSessionsCount();
     
+    // Show page with staggered animations
+    showPageContent();
+    
   } catch (err) {
     console.error("Error loading account:", err);
     accountInfo.innerHTML = `<div style="color: red; padding: 20px;">Error: ${err.message}</div>`;
+    
+    // Show page even on error
+    showPageContent();
   }
 }
 
@@ -345,6 +505,31 @@ document.getElementById("signoutBtn").addEventListener("click", async () => {
 
 // ===== 2FA TIP CLICK HANDLER =====
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize LoadingManager
+  LoadingManager.init();
+  
+  // Setup notification panel
+  setupNotificationPanel();
+  
+  // Setup navigation buttons
+  const navNotifications = document.getElementById("navNotifications");
+  const navProfile = document.getElementById("navProfile");
+  const navProfileBtn = document.getElementById("navProfile");
+  
+  if (navNotifications) {
+    navNotifications.addEventListener("click", () => {
+      console.log("📢 Notifications clicked");
+      toggleNotificationPanel();
+    });
+  }
+  
+  if (navProfileBtn) {
+    navProfileBtn.addEventListener("click", () => {
+      console.log("👤 Profile clicked");
+      window.location.href = "settings.html";
+    });
+  }
+  
   const twoFATip = document.getElementById("twoFATip");
   if (twoFATip) {
     twoFATip.addEventListener("click", () => {
@@ -378,14 +563,97 @@ window.addEventListener('storage', (event) => {
   }
 });
 
+// Stagger animations for loaded elements
+function addElementAnimations() {
+  console.log("🎬 Starting staggered animations...");
+  const accountCard = document.querySelector('.account-card');
+  const healthCard = document.querySelector('.health-card');
+  const metricCards = document.querySelectorAll('.metric-card');
+  const quickActionsSection = document.querySelector('.quick-actions-section');
+  const actionCards = document.querySelectorAll('.action-card');
+  
+  // Add loaded class with staggered timing
+  if (accountCard) {
+    console.log("📌 Adding animation to account card at 200ms");
+    setTimeout(() => {
+      accountCard.classList.add('loaded');
+      console.log("✅ Account card animated");
+    }, 200);
+  }
+  
+  if (healthCard) {
+    console.log("📌 Adding animation to health card at 400ms");
+    setTimeout(() => {
+      healthCard.classList.add('loaded');
+      console.log("✅ Health card animated");
+    }, 400);
+  }
+  
+  if (metricCards.length > 0) {
+    console.log(`📌 Adding animations to ${metricCards.length} metric cards starting at 700ms`);
+    metricCards.forEach((card, index) => {
+      card.style.setProperty('--card-index', index);
+      const delay = 700 + index * 150;
+      setTimeout(() => {
+        card.classList.add('loaded');
+        console.log(`✅ Metric card ${index} animated at ${delay}ms`);
+      }, delay);
+    });
+  }
+  
+  if (quickActionsSection) {
+    console.log("📌 Adding animation to quick actions at 1200ms");
+    setTimeout(() => {
+      quickActionsSection.classList.add('loaded');
+      console.log("✅ Quick actions animated");
+    }, 1200);
+  }
+  
+  if (actionCards.length > 0) {
+    console.log(`📌 Adding animations to ${actionCards.length} action cards starting at 1400ms`);
+    actionCards.forEach((card, index) => {
+      card.style.setProperty('--card-index', index);
+      const delay = 1400 + index * 150;
+      setTimeout(() => {
+        card.classList.add('loaded');
+        console.log(`✅ Action card ${index} animated at ${delay}ms`);
+      }, delay);
+    });
+  }
+}
+
+// Show page on load complete
+function showPageContent() {
+  console.log("🎯 showPageContent() called - starting animation sequence");
+  const container = document.querySelector('.dash-container');
+  if (container) {
+    console.log("📦 Found container, removing loading-state");
+    container.classList.remove('loading-state');
+  } else {
+    console.error("❌ Container not found!");
+  }
+  console.log("📞 Calling addElementAnimations...");
+  addElementAnimations();
+  console.log("⏹️ Hiding page loader...");
+  LoadingManager.hidePageLoader();
+}
+
 // Ensure DOM is ready before calling loadAccount
 if (document.readyState === 'loading') {
   console.log("⏳ DOM still loading, waiting for DOMContentLoaded...");
   document.addEventListener('DOMContentLoaded', () => {
-    console.log("✅ DOMContentLoaded fired, calling loadAccount()");
+    console.log("✅ DOMContentLoaded fired, showing loader...");
+    const container = document.querySelector('.dash-container');
+    if (container) container.classList.add('loading-state');
+    LoadingManager.showPageLoader('Loading your account');
+    console.log("🚀 Loading account data...");
     loadAccount();
   });
 } else {
-  console.log("✅ DOM already loaded, calling loadAccount() immediately");
+  console.log("✅ DOM already loaded, showing loader...");
+  const container = document.querySelector('.dash-container');
+  if (container) container.classList.add('loading-state');
+  LoadingManager.showPageLoader('Loading your account');
+  console.log("🚀 Loading account data...");
   loadAccount();
 }
