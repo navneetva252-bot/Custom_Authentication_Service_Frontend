@@ -16,12 +16,15 @@ export function initFormSubmit({
 
     const phoneError = document.getElementById("phoneError");
     const emailError = document.getElementById("emailError");
+    const formError = document.getElementById("formError");
     const resetSuccess = document.getElementById("resetSuccess");
     const submitBtn = form.querySelector("button[type='submit']");
 
+    // Clear all previous messages
     resetSuccess.textContent = "";
     phoneError.textContent = "";
     if (emailError) emailError.textContent = "";
+    formError.textContent = "";
 
     const selectedOption = countryCodeSelect.options[countryCodeSelect.selectedIndex];
     const requiredLength = Number(selectedOption.dataset.length);
@@ -80,7 +83,11 @@ export function initFormSubmit({
       if (!res.ok || !data.success) {
         console.log("❌ Failed to send reset link");
         resetSuccess.textContent = "";
-        phoneError.textContent = data.message || "Failed to send reset link.";
+        
+        // Display backend error in the main form error area
+        const errorMessage = data.message || data.error || "Failed to send reset link. Please try again.";
+        formError.textContent = errorMessage;
+        
         return;
       }
 
