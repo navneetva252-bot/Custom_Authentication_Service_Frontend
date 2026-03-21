@@ -20,6 +20,16 @@ function saveNewToken(res) {
   if (t) localStorage.setItem("accessToken", t);
 }
 
+// ===== Toggle Eye Icon for Password Fields =====
+document.querySelectorAll(".toggle-eye").forEach(eye => {
+  eye.addEventListener("click", () => {
+    const input = document.getElementById(eye.dataset.target);
+    if (input) {
+      input.type = input.type === "password" ? "text" : "password";
+    }
+  });
+});
+
 function getEventBadge(event) {
   if (!event) return "—";
   const e = event.toLowerCase();

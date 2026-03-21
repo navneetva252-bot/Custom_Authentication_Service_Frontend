@@ -10,6 +10,16 @@ if (!window.RUNTIME_ENV) {
 const API_BASE = window.RUNTIME_ENV?.API_BASE_URL || "NOT_DEFINED";
 console.log("📍 API_BASE:", API_BASE);
 
+// ===== Toggle Eye Icon for Password Fields =====
+document.querySelectorAll(".toggle-eye").forEach(eye => {
+  eye.addEventListener("click", () => {
+    const input = document.getElementById(eye.dataset.target);
+    if (input) {
+      input.type = input.type === "password" ? "text" : "password";
+    }
+  });
+});
+
 function getDeviceUUID() {
   let uuid = localStorage.getItem("deviceUUID");
   if (!uuid) { uuid = crypto.randomUUID(); localStorage.setItem("deviceUUID", uuid); }
