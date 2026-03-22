@@ -80,19 +80,10 @@ export function initFormSubmit({ form, phoneInput, emailInput, passwordInput, co
 
       // 2FA required — redirect to OTP
       if (data.requires2FA) {
-        // Store context for post-password-reset login
-        const isPostPasswordReset = localStorage.getItem("justResetPassword") === "true";
-        
         localStorage.setItem("otpDeliveryMode", emailInput.value ? "EMAIL" : "PHONE");
         localStorage.setItem("otpPurpose", "DEVICE_VERIFICATION");
         localStorage.setItem("signupEmail", emailInput.value || "");
         localStorage.setItem("signupPhone", localNumber ? `+${countryCode}${localNumber}` : "");
-        
-        // Mark context for OTP page messaging
-        if (isPostPasswordReset) {
-          localStorage.setItem("isPasswordResetFlow", "true");
-        }
-        
         window.location.href = "otp.html";
         return;
       }
