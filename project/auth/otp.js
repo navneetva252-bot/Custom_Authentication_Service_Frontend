@@ -124,12 +124,71 @@ otpForm.addEventListener("submit", async (e) => {
   verifyBtn.disabled = true;
   verifyBtn.textContent = "Verifying...";
 
-  // PASSWORD_RESET: store OTP locally for the reset-password API call, skip verify endpoint
+  // PASSWORD_RESET: Verify OTP with backend before allowing password reset
   if (otpPurpose === "PASSWORD_RESET") {
-    localStorage.setItem("resetCode", otp);
-    clearInterval(otpInterval);
-    otpSuccess.textContent = "OTP confirmed. Redirecting...";
-    setTimeout(() => { window.location.href = "password.html"; }, 1200);
+    try {
+      console.log("🔐 PASSWORD_RESET OTP Verification:");
+      console.log("   OTP Code:", otp);
+      console.log("   Email:", email || "none");
+      console.log("   Phone:", phone || "none");
+      console.log("   Calling endpoint: /password/verify-reset-password");
+
+      // Backend needs email or phone to identify user + OTP code
+      const requestBody = { code: otp };
+      
+      if (email) {
+        requestBody.email = email;
+      } else if (phone) {
+        requestBody.phone = phone;
+        const match = phone.match(/^\+(\d{1,3})(\d+)$/);
+        if (match) {
+          requestBody.countryCode = match[1];
+          requestBody.localNumber = match[2];
+        }
+      }
+
+      const res = await fetch(`${API_BASE}/password/verify-reset-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-uuid": getDeviceUUID(),
+        },
+        body: JSON.stringify(requestBody),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      console.log("📡 OTP Verification Response:");
+      console.log("   Status:", res.status);
+      console.log("   Success:", data.success);
+      console.log("   Message:", data.message);
+
+      if (!res.ok || !data.success) {
+        otpError.textContent = data.message || "Invalid OTP. Please try again.";
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = "Verify OTP ✓";
+        return;
+      }
+
+      // OTP verified! Store it for password reset
+      localStorage.setItem("resetCode", otp);
+      clearInterval(otpInterval);
+      
+      console.log("✅ OTP verified successfully. resetCode stored =", localStorage.getItem("resetCode"));
+      
+      otpSuccess.textContent = "OTP confirmed. Redirecting...";
+      setTimeout(() => { 
+        console.log("→ Redirecting to password.html");
+        window.location.href = "password.html"; 
+      }, 1200);
+
+    } catch (err) {
+      console.error("❌ OTP Verification Error:", err);
+      otpError.textContent = "Network error. Please check your connection.";
+      verifyBtn.disabled = false;
+      verifyBtn.textContent = "Verify OTP ✓";
+    }
     return;
   }
 
