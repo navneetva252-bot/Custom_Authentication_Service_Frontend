@@ -11,7 +11,7 @@ const emailField = document.getElementById("emailField");
 const countryCodeSelect = document.getElementById("countryCode");
 const phoneInput = document.getElementById("phone");
 const emailInput = document.getElementById("email");
-const phoneError = document.getElementById("phoneError");
+const validationError = document.getElementById("validationError");
 const form = document.querySelector(".auth-form");
 const phoneDropdown = document.getElementById("countryCode");
 
@@ -20,12 +20,11 @@ const emailRegex = window.emailRegex;
 const countries = window.countries;
 
 applyAuthMode(AUTH_MODE, phoneField, emailField, phoneInput, emailInput,phoneDropdown);
-initCountryDropdown(countries, countryCodeSelect, phoneInput, phoneError);
+initCountryDropdown(countries, countryCodeSelect, phoneInput, validationError);
 initValidation({
   phoneInput,
   emailInput,
   countryCodeSelect,
-  phoneError,
   messages,
   emailRegex
 });
