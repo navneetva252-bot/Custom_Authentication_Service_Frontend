@@ -1,5 +1,5 @@
 // country-dropdown.js
-export function initCountryDropdown(countries, countryCodeSelect, phoneInput, phoneError) {
+export function initCountryDropdown(countries, countryCodeSelect, phoneInput, validationError) {
   countries.forEach(c => {
     const option = document.createElement("option");
     option.value = c.code;
@@ -16,7 +16,7 @@ export function initCountryDropdown(countries, countryCodeSelect, phoneInput, ph
     const selectedOption = countryCodeSelect.options[countryCodeSelect.selectedIndex];
     phoneInput.value = "";
     phoneInput.maxLength = selectedOption.dataset.length;
-    phoneError.textContent = "";
+    validationError.textContent = "";
   });
 
   // ================================
