@@ -193,11 +193,25 @@ otpForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    // Choose endpoint based on delivery mode
+    // Choose endpoint based on OTP purpose
     let endpoint;
     const requestBody = { code: otp };
 
-    if (deliveryMode === "EMAIL") {
+    if (otpPurpose === "DEVICE_VERIFICATION") {
+      // Device verification (2FA after login)
+      endpoint = `${API_BASE}/verification/verify-device`;
+      
+      if (deliveryMode === "EMAIL" && email) {
+        requestBody.email = email;
+      } else if (phone) {
+        requestBody.phone = phone;
+        const match = phone.match(/^\+(\d{1,3})(\d+)$/);
+        if (match) {
+          requestBody.countryCode = match[1];
+          requestBody.localNumber = match[2];
+        }
+      }
+    } else if (deliveryMode === "EMAIL") {
       endpoint = `${API_BASE}/verification/verify-email`;
       requestBody.email = email;
     } else {
@@ -239,6 +253,11 @@ otpForm.addEventListener("submit", async (e) => {
     // Redirect after short delay
     setTimeout(() => {
       if (otpPurpose === "DEVICE_VERIFICATION") {
+        // Clear password reset flags after device verification succeeds
+        localStorage.removeItem("justResetPassword");
+        localStorage.removeItem("isPasswordResetFlow");
+        localStorage.removeItem("resetPasswordEmail");
+        
         // 2FA complete — go to dashboard
         window.location.href = "../app/dashboard.html";
       } else {
