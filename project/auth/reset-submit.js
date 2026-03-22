@@ -111,6 +111,10 @@ export function initFormSubmit({
       localStorage.removeItem("otpPurpose");
       localStorage.removeItem("resetCode");
 
+      // Mark that password was just reset for login flow
+      localStorage.setItem("justResetPassword", "true");
+      localStorage.setItem("resetPasswordEmail", email || "");
+
       window.location.href = "reset-success.html";
 
     } catch (err) {
