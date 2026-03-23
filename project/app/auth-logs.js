@@ -83,8 +83,8 @@ async function loadLogs(page) {
     }
 
     // Backend returns format:
-    // { success: true, logs: [...], meta: { totalLogs, totalPages, ... } }
-    const logs = data.logs || (Array.isArray(data.data) ? data.data : []);
+    // { success: true, logs: [{event, time, device, type}, ...], meta: {...} }
+    const logs = data.logs || [];
     const total = data.meta?.totalLogs ?? logs.length;
     const totalPages = data.meta?.totalPages ?? Math.max(1, Math.ceil(total / LIMIT));
 
@@ -99,7 +99,7 @@ async function loadLogs(page) {
             <tr>
               <th>Event</th>
               <th>Device</th>
-              <th>IP Address</th>
+              <th>Type</th>
               <th>Time</th>
             </tr>
           </thead>
@@ -107,8 +107,8 @@ async function loadLogs(page) {
             ${logs.map(log => `
               <tr>
                 <td>${getEventBadge(log.event)}</td>
-                <td>${log.device || "—"}</td>
-                <td>—</td>
+                <td>${log.device || "Unknown Device"}</td>
+                <td>${log.type || "Unknown"}</td>
                 <td>${log.time ? new Date(log.time).toLocaleString() : "Invalid Date"}</td>
               </tr>
             `).join("")}
