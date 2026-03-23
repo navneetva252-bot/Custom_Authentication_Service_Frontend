@@ -106,10 +106,10 @@ async function loadLogs(page) {
           <tbody>
             ${logs.map(log => `
               <tr>
-                <td>${getEventBadge(log.event || log.action || log.type || log.eventType)}</td>
-                <td>${log.deviceName || (log.deviceUUID ? log.deviceUUID.slice(0, 12) + "…" : "—")}</td>
-                <td>${log.ipAddress || log.ip || "—"}</td>
-                <td>${new Date(log.createdAt || log.timestamp).toLocaleString()}</td>
+                <td>${getEventBadge(log.event)}</td>
+                <td>${log.device || "—"}</td>
+                <td>—</td>
+                <td>${log.time ? new Date(log.time).toLocaleString() : "Invalid Date"}</td>
               </tr>
             `).join("")}
           </tbody>
