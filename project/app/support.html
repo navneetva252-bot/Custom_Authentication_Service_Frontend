@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support - SecureAuth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../dashboard.css" />
+  <link rel="stylesheet" href="support.css" />
+</head>
+<body class="dashboard-body">
+  <div class="dash-container">
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+      <div class="nav-brand">
+        <span class="material-icons nav-logo">security</span>
+        <span class="brand-name">SecureAuth</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="sessions.html" class="nav-link">Sessions</a></li>
+        <li><a href="auth-logs.html" class="nav-link">Logs</a></li>
+        <li><a href="settings.html" class="nav-link">Settings</a></li>
+        <li><a href="support.html" class="nav-link active">Support</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="navProfile" class="nav-button" title="Profile">
+          <span class="material-icons">account_circle</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="support-container">
+      
+      <!-- Header -->
+      <div class="support-header">
+        <div class="header-content">
+          <h1>Help & Support</h1>
+          <p>We're here to help! Find answers or contact our support team.</p>
+        </div>
+        <div class="header-icon">
+          <span class="material-icons">help_outline</span>
+        </div>
+      </div>
+
+      <!-- Support Options Grid -->
+      <div class="support-grid">
+
+        <!-- Documentation Card -->
+        <div class="support-card" id="docCard">
+          <div class="card-icon">
+            <span class="material-icons">description</span>
+          </div>
+          <h3>Documentation</h3>
+          <p>Explore our comprehensive guides and tutorials</p>
+          <div class="card-features">
+            <span class="feature-tag">Getting Started</span>
+            <span class="feature-tag">API Docs</span>
+            <span class="feature-tag">FAQs</span>
+          </div>
+          <button class="card-btn">Browse Docs →</button>
+        </div>
+
+        <!-- Help Center Card -->
+        <div class="support-card" id="helpCard">
+          <div class="card-icon">
+            <span class="material-icons">lightbulb</span>
+          </div>
+          <h3>Help Center</h3>
+          <p>Quick answers to common questions</p>
+          <div class="card-features">
+            <span class="feature-tag">2FA Setup</span>
+            <span class="feature-tag">Sessions</span>
+            <span class="feature-tag">Security Tips</span>
+          </div>
+          <button class="card-btn">Get Help →</button>
+        </div>
+
+        <!-- Report Issue Card -->
+        <div class="support-card" id="reportCard">
+          <div class="card-icon">
+            <span class="material-icons">bug_report</span>
+          </div>
+          <h3>Report Issue</h3>
+          <p>Report bugs or technical problems</p>
+          <div class="card-features">
+            <span class="feature-tag">Bug Tracking</span>
+            <span class="feature-tag">Urgent Issues</span>
+            <span class="feature-tag">Feedback</span>
+          </div>
+          <button class="card-btn">Report Now →</button>
+        </div>
+
+        <!-- Contact Us Card -->
+        <div class="support-card" id="contactCard">
+          <div class="card-icon">
+            <span class="material-icons">email</span>
+          </div>
+          <h3>Contact Us</h3>
+          <p>Get in touch with our support team</p>
+          <div class="card-features">
+            <span class="feature-tag">Email</span>
+            <span class="feature-tag">Live Chat</span>
+            <span class="feature-tag">Callback</span>
+          </div>
+          <button class="card-btn">Contact Support →</button>
+        </div>
+
+      </div>
+
+      <!-- Support Status -->
+      <div class="support-status">
+        <div class="status-content">
+          <div class="status-item">
+            <span class="material-icons status-icon">check_circle</span>
+            <div>
+              <h4>System Status</h4>
+              <p>All systems operational</p>
+            </div>
+          </div>
+          <div class="status-item">
+            <span class="material-icons status-icon">schedule</span>
+            <div>
+              <h4>Support Hours</h4>
+              <p>24/7 Available</p>
+            </div>
+          </div>
+          <div class="status-item">
+            <span class="material-icons status-icon">timer</span>
+            <div>
+              <h4>Avg Response Time</h4>
+              <p>2 hours</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Documentation Modal -->
+    <div class="modal" id="docModal">
+      <div class="modal-content">
+        <button class="modal-close">×</button>
+        <h2>📚 Complete Documentation</h2>
+        <div class="modal-sections">
+          <section>
+            <h3>🚀 Getting Started Guide</h3>
+            <ul>
+              <li><strong>Account Setup:</strong> Create and verify your SecureAuth account in minutes with email verification</li>
+              <li><strong>Two-Factor Authentication:</strong> Add an extra layer of security using authenticator apps or SMS codes</li>
+              <li><strong>Security Keys:</strong> Use hardware security keys (FIDO2/WebAuthn) for the strongest protection</li>
+              <li><strong>Password Management:</strong> Create strong passwords and use our secure password manager integration</li>
+              <li><strong>Recovery Codes:</strong> Generate and safely store backup recovery codes for account access</li>
+            </ul>
+          </section>
+          <section>
+            <h3>🔌 API & Developer Documentation</h3>
+            <ul>
+              <li><strong>Authentication API:</strong> RESTful endpoints for login, logout, and session management</li>
+              <li><strong>Endpoints Reference:</strong> POST /auth/login, POST /auth/logout, GET /auth/status, POST /auth/verify</li>
+              <li><strong>Authentication Methods:</strong> OAuth 2.0, JWT tokens, API keys with rate limiting</li>
+              <li><strong>Code Examples:</strong> Integration examples in JavaScript, Python, Java, and Node.js</li>
+              <li><strong>Error Handling:</strong> Status codes, error responses, and retry strategies</li>
+              <li><strong>Security Best Practices:</strong> Rate limiting, CORS policies, token refresh strategies</li>
+            </ul>
+          </section>
+          <section>
+            <h3>💡 Feature Guides</h3>
+            <ul>
+              <li><strong>Sessions Management:</strong> Monitor active sessions, set timeout limits, terminate unwanted sessions</li>
+              <li><strong>Device Fingerprinting:</strong> Track and manage trusted devices with custom labels</li>
+              <li><strong>Login Attempts:</strong> View detailed login history with IP addresses and device information</li>
+              <li><strong>Security Settings:</strong> Configure account lockout policies, IP whitelists, and session limits</li>
+              <li><strong>Notifications:</strong> Set up alerts for unusual login activity or security events</li>
+            </ul>
+          </section>
+          <section>
+            <h3>❓ Frequently Asked Questions</h3>
+            <ul>
+              <li><strong>How long do sessions last?</strong> Default 30 days or based on your custom settings in Account Settings</li>
+              <li><strong>Can I use multiple devices?</strong> Yes! Unlimited devices with individual session management</li>
+              <li><strong>How are passwords encrypted?</strong> AES-256 encryption at rest, TLS 1.3 in transit, never stored in plain text</li>
+              <li><strong>What if I forget my password?</strong> Use "Forgot Password" to reset via email or authenticated recovery codes</li>
+              <li><strong>Is there offline access?</strong> Session key can be used offline for limited operations</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Center Modal -->
+    <div class="modal" id="helpModal">
+      <div class="modal-content">
+        <button class="modal-close">×</button>
+        <h2>💡 Help Center & Quick Solutions</h2>
+        <div class="modal-sections">
+          <section>
+            <h3>🔐 Two-Factor Authentication & Security</h3>
+            <div class="faq-item">
+              <strong>Q: How do I enable 2FA on my account?</strong>
+              <p>A: Navigate to Settings → Account Security → Enable Two-Factor Authentication. Choose between Authenticator App (Google Authenticator, Authy) or SMS verification. You'll receive backup recovery codes - store these safely!</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: What if I lose my authenticator or phone?</strong>
+              <p>A: Use your recovery codes to regain access. Go to Login → Can't access? → Use recovery code. If you've lost those too, contact our support team with account verification information.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: Can I change my 2FA method?</strong>
+              <p>A: Yes! Disable current 2FA and re-enable with your new method in Settings. Your recovery codes will update automatically.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: Is my data encrypted end-to-end?</strong>
+              <p>A: Yes. We use AES-256 encryption for stored data and TLS 1.3 for transmission. Passwords are salted and hashed using bcrypt with 10+ rounds.</p>
+            </div>
+          </section>
+          <section>
+            <h3>📱 Sessions, Devices & Login Management</h3>
+            <div class="faq-item">
+              <strong>Q: How many devices can I log into simultaneously?</strong>
+              <p>A: Unlimited! You can be logged in on as many devices as you need. Each device gets its own session with independent timeout and termination.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: How do I log out from a specific device?</strong>
+              <p>A: Go to Sessions → Find the device → Click "Terminate Session". The device will be logged out immediately. You'll still be logged in on other devices.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: What do I do if I see an unfamiliar login in my Auth Logs?</strong>
+              <p>A: Check Sessions for unfamiliar devices. If suspicious, terminate that session immediately and change your password. Enable login notifications in Settings for alerts on new logins.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: How long do sessions stay active?</strong>
+              <p>A: Default is 30 days of inactivity. You can customize this in Settings → Session Settings (options: 7, 14, 30, 60 days, or never expire).</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: What's the difference between a session and a device?</strong>
+              <p>A: A device is a browser/app, a session is an active login on that device. One device can have multiple sessions if you logout and login again.</p>
+            </div>
+          </section>
+          <section>
+            <h3>💾 Account Management & Data</h3>
+            <div class="faq-item">
+              <strong>Q: How do I reset my password if I remember it?</strong>
+              <p>A: Settings → Account Security → Change Password. Enter your current password and new password. All existing sessions will remain valid.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: How do I reset my password if I forget it?</strong>
+              <p>A: On Login page, click "Forgot Password?" → Enter email → Check your inbox for reset link (valid for 1 hour) → Create new password.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: Can I delete or deactivate my account?</strong>
+              <p>A: Yes. Settings → Account Management → Delete Account. This is permanent - all data will be erased after 30 days. We'll send confirmation emails.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: Can I export my data?</strong>
+              <p>A: Not self-service yet, but contact support@secureauth.com and we'll provide your data export in JSON format within 24 hours.</p>
+            </div>
+            <div class="faq-item">
+              <strong>Q: How do I update my profile information?</strong>
+              <p>A: Settings → Profile → Edit name, email, phone, or avatar. Email changes require verification via a confirmation link sent to your inbox.</p>
+            </div>
+          </section>
+          <section>
+            <h3>🛡️ Security & Privacy Tips</h3>
+            <ul style="list-style-type: none; padding: 0;">
+              <li>✅ Use a unique, strong password (12+ characters with mixed case, numbers, symbols)</li>
+              <li>✅ Enable 2FA immediately - the most important security step you can take</li>
+              <li>✅ Review Sessions regularly and logout unused devices</li>
+              <li>✅ Check Auth Logs weekly for suspicious activity</li>
+              <li>✅ Enable login notifications to get alerts for new access</li>
+              <li>✅ Use hardware security keys (YubiKey, Google Titan) for maximum protection</li>
+              <li>✅ Store recovery codes in a secure location (password manager, safe deposit box)</li>
+              <li>🚫 Never share your password or recovery codes with anyone</li>
+              <li>🚫 Don't use information from your public profile in passwords</li>
+              <li>🚫 Be careful with links in emails - always visit secureauth.com directly for sensitive actions</li>
+            </ul>
+          </section>
+        </div>
+        <style>
+          .faq-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+          }
+          .faq-item:last-child {
+            border-bottom: none;
+          }
+        </style>
+      </div>
+    </div>
+
+    <!-- Report Issue Modal -->
+    <div class="modal" id="reportModal">
+      <div class="modal-content">
+        <button class="modal-close">×</button>
+        <h2>Report an Issue</h2>
+        <form id="reportForm" class="report-form">
+          <div class="form-group">
+            <label>Issue Type *</label>
+            <select id="issueType" title="Select an issue type" required>
+              <option value="">Select an issue type</option>
+              <option value="bug">Bug Report</option>
+              <option value="performance">Performance Issue</option>
+              <option value="login">Login Problem</option>
+              <option value="security">Security Concern</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Priority *</label>
+            <select id="issuePriority" title="Select issue priority" required>
+              <option value="">Select priority</option>
+              <option value="low">Low - Non-essential feature</option>
+              <option value="medium">Medium - Feature not working</option>
+              <option value="high">High - Can't access account</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Subject *</label>
+            <input type="text" id="issueSubject" placeholder="Brief description" required />
+          </div>
+          <div class="form-group">
+            <label>Details *</label>
+            <textarea id="issueDetails" placeholder="Describe the issue in detail..." rows="5" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Browser/Device</label>
+            <input type="text" id="issueDevice" placeholder="e.g., Chrome on Windows 10" />
+          </div>
+          <button type="submit" class="submit-btn">Send Report</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Contact Us Modal -->
+    <div class="modal" id="contactModal">
+      <div class="modal-content">
+        <button class="modal-close">×</button>
+        <h2>Contact Support</h2>
+        <div class="contact-methods">
+          <div class="contact-method">
+            <span class="material-icons">email</span>
+            <div>
+              <h3>Email</h3>
+              <p>support@secureauth.com</p>
+              <small>Response time: 2-4 hours</small>
+            </div>
+          </div>
+          <div class="contact-method">
+            <span class="material-icons">forum</span>
+            <div>
+              <h3>Live Chat</h3>
+              <p>Available 24/7 on our website</p>
+              <small>Start a conversation now</small>
+            </div>
+          </div>
+          <div class="contact-method">
+            <span class="material-icons">phone</span>
+            <div>
+              <h3>Request Callback</h3>
+              <p>Schedule a call with our team</p>
+              <small>Available during business hours</small>
+            </div>
+          </div>
+        </div>
+        <form id="contactForm" class="contact-form">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="contactName" placeholder="Full name" required />
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="contactEmail" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Preferred Method *</label>
+            <select id="contactMethod" title="Select your preferred contact method" required>
+              <option value="">Select contact method</option>
+              <option value="email">Email</option>
+              <option value="chat">Live Chat</option>
+              <option value="callback">Request Callback</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message *</label>
+            <textarea id="contactMessage" placeholder="How can we help?" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="support.js"></script>
+</body>
+</html>
