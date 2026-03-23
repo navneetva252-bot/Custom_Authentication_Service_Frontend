@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../dashboard.css" />
   <link rel="stylesheet" href="support.css" />
 </head>
@@ -201,98 +200,173 @@
       <div class="modal-content">
         <button class="modal-close">×</button>
         <h2>💡 Help Center & Quick Solutions</h2>
-        <div class="modal-sections">
-          <section>
+        <div class="faq-container">
+          <!-- 2FA & Security Section -->
+          <div class="faq-category">
             <h3>🔐 Two-Factor Authentication & Security</h3>
-            <div class="faq-item">
-              <strong>Q: How do I enable 2FA on my account?</strong>
-              <p>A: Navigate to Settings → Account Security → Enable Two-Factor Authentication. Choose between Authenticator App (Google Authenticator, Authy) or SMS verification. You'll receive backup recovery codes - store these safely!</p>
+            <div class="accordion">
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How do I enable 2FA on my account?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Navigate to Settings → Account Security → Enable Two-Factor Authentication. Choose between Authenticator App (Google Authenticator, Authy) or SMS verification. You'll receive backup recovery codes - store these safely!</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>What if I lose my authenticator or phone?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Use your recovery codes to regain access. Go to Login → Can't access? → Use recovery code. If you've lost those too, contact our support team with account verification information.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Can I change my 2FA method?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Yes! Disable current 2FA and re-enable with your new method in Settings. Your recovery codes will update automatically.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Is my data encrypted end-to-end?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Yes. We use AES-256 encryption for stored data and TLS 1.3 for transmission. Passwords are salted and hashed using bcrypt with 10+ rounds.</p>
+                </div>
+              </div>
             </div>
-            <div class="faq-item">
-              <strong>Q: What if I lose my authenticator or phone?</strong>
-              <p>A: Use your recovery codes to regain access. Go to Login → Can't access? → Use recovery code. If you've lost those too, contact our support team with account verification information.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: Can I change my 2FA method?</strong>
-              <p>A: Yes! Disable current 2FA and re-enable with your new method in Settings. Your recovery codes will update automatically.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: Is my data encrypted end-to-end?</strong>
-              <p>A: Yes. We use AES-256 encryption for stored data and TLS 1.3 for transmission. Passwords are salted and hashed using bcrypt with 10+ rounds.</p>
-            </div>
-          </section>
-          <section>
+          </div>
+
+          <!-- Sessions & Devices Section -->
+          <div class="faq-category">
             <h3>📱 Sessions, Devices & Login Management</h3>
-            <div class="faq-item">
-              <strong>Q: How many devices can I log into simultaneously?</strong>
-              <p>A: Unlimited! You can be logged in on as many devices as you need. Each device gets its own session with independent timeout and termination.</p>
+            <div class="accordion">
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How many devices can I log into simultaneously?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Unlimited! You can be logged in on as many devices as you need. Each device gets its own session with independent timeout and termination.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How do I log out from a specific device?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Go to Sessions → Find the device → Click "Terminate Session". The device will be logged out immediately. You'll still be logged in on other devices.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>What do I do if I see an unfamiliar login in my Auth Logs?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Check Sessions for unfamiliar devices. If suspicious, terminate that session immediately and change your password. Enable login notifications in Settings for alerts on new logins.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How long do sessions stay active?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Default is 30 days of inactivity. You can customize this in Settings → Session Settings (options: 7, 14, 30, 60 days, or never expire).</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>What's the difference between a session and a device?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>A device is a browser/app, a session is an active login on that device. One device can have multiple sessions if you logout and login again.</p>
+                </div>
+              </div>
             </div>
-            <div class="faq-item">
-              <strong>Q: How do I log out from a specific device?</strong>
-              <p>A: Go to Sessions → Find the device → Click "Terminate Session". The device will be logged out immediately. You'll still be logged in on other devices.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: What do I do if I see an unfamiliar login in my Auth Logs?</strong>
-              <p>A: Check Sessions for unfamiliar devices. If suspicious, terminate that session immediately and change your password. Enable login notifications in Settings for alerts on new logins.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: How long do sessions stay active?</strong>
-              <p>A: Default is 30 days of inactivity. You can customize this in Settings → Session Settings (options: 7, 14, 30, 60 days, or never expire).</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: What's the difference between a session and a device?</strong>
-              <p>A: A device is a browser/app, a session is an active login on that device. One device can have multiple sessions if you logout and login again.</p>
-            </div>
-          </section>
-          <section>
+          </div>
+
+          <!-- Account Management Section -->
+          <div class="faq-category">
             <h3>💾 Account Management & Data</h3>
-            <div class="faq-item">
-              <strong>Q: How do I reset my password if I remember it?</strong>
-              <p>A: Settings → Account Security → Change Password. Enter your current password and new password. All existing sessions will remain valid.</p>
+            <div class="accordion">
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How do I reset my password if I remember it?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Settings → Account Security → Change Password. Enter your current password and new password. All existing sessions will remain valid.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How do I reset my password if I forget it?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>On Login page, click "Forgot Password?" → Enter email → Check your inbox for reset link (valid for 1 hour) → Create new password.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Can I delete or deactivate my account?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Yes. Settings → Account Management → Delete Account. This is permanent - all data will be erased after 30 days. We'll send confirmation emails.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>Can I export my data?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Not self-service yet, but contact support@secureauth.com and we'll provide your data export in JSON format within 24 hours.</p>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <button class="accordion-header">
+                  <span>How do I update my profile information?</span>
+                  <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-body">
+                  <p>Settings → Profile → Edit name, email, phone, or avatar. Email changes require verification via a confirmation link sent to your inbox.</p>
+                </div>
+              </div>
             </div>
-            <div class="faq-item">
-              <strong>Q: How do I reset my password if I forget it?</strong>
-              <p>A: On Login page, click "Forgot Password?" → Enter email → Check your inbox for reset link (valid for 1 hour) → Create new password.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: Can I delete or deactivate my account?</strong>
-              <p>A: Yes. Settings → Account Management → Delete Account. This is permanent - all data will be erased after 30 days. We'll send confirmation emails.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: Can I export my data?</strong>
-              <p>A: Not self-service yet, but contact support@secureauth.com and we'll provide your data export in JSON format within 24 hours.</p>
-            </div>
-            <div class="faq-item">
-              <strong>Q: How do I update my profile information?</strong>
-              <p>A: Settings → Profile → Edit name, email, phone, or avatar. Email changes require verification via a confirmation link sent to your inbox.</p>
-            </div>
-          </section>
-          <section>
+          </div>
+
+          <!-- Security Tips -->
+          <div class="faq-category">
             <h3>🛡️ Security & Privacy Tips</h3>
-            <ul style="list-style-type: none; padding: 0;">
-              <li>✅ Use a unique, strong password (12+ characters with mixed case, numbers, symbols)</li>
-              <li>✅ Enable 2FA immediately - the most important security step you can take</li>
-              <li>✅ Review Sessions regularly and logout unused devices</li>
-              <li>✅ Check Auth Logs weekly for suspicious activity</li>
-              <li>✅ Enable login notifications to get alerts for new access</li>
-              <li>✅ Use hardware security keys (YubiKey, Google Titan) for maximum protection</li>
-              <li>✅ Store recovery codes in a secure location (password manager, safe deposit box)</li>
-              <li>🚫 Never share your password or recovery codes with anyone</li>
-              <li>🚫 Don't use information from your public profile in passwords</li>
-              <li>🚫 Be careful with links in emails - always visit secureauth.com directly for sensitive actions</li>
-            </ul>
-          </section>
+            <div class="tips-list">
+              <ul style="list-style-type: none; padding: 0;">
+                <li>✅ Use a unique, strong password (12+ characters with mixed case, numbers, symbols)</li>
+                <li>✅ Enable 2FA immediately - the most important security step you can take</li>
+                <li>✅ Review Sessions regularly and logout unused devices</li>
+                <li>✅ Check Auth Logs weekly for suspicious activity</li>
+                <li>✅ Enable login notifications to get alerts for new access</li>
+                <li>✅ Use hardware security keys (YubiKey, Google Titan) for maximum protection</li>
+                <li>✅ Store recovery codes in a secure location (password manager, safe deposit box)</li>
+                <li>🚫 Never share your password or recovery codes with anyone</li>
+                <li>🚫 Don't use information from your public profile in passwords</li>
+                <li>🚫 Be careful with links in emails - always visit secureauth.com directly for sensitive actions</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <style>
-          .faq-item {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-          }
-          .faq-item:last-child {
-            border-bottom: none;
-          }
-        </style>
       </div>
     </div>
 
