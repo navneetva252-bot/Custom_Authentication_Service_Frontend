@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../dashboard.css" />
   <link rel="stylesheet" href="support.css" />
 </head>
-<body class="dashboard-body">
+<body class="dashboard-body theme-light">
   <div class="dash-container">
 
     <!-- Top Navigation Bar -->
@@ -28,6 +28,9 @@
         <li><a href="support.html" class="nav-link active">Support</a></li>
       </ul>
       <div class="nav-actions">
+        <button class="nav-button theme-toggle" data-theme-toggle title="Switch to dark mode" aria-label="Switch to dark mode">
+          <span class="material-icons" data-theme-icon>dark_mode</span>
+        </button>
         <button id="navProfile" class="nav-button" title="Profile">
           <span class="material-icons">account_circle</span>
         </button>
@@ -474,5 +477,6 @@
   </div>
 
   <script src="support.js"></script>
+  <script src="theme-toggle.js"></script>
 </body>
 </html>
