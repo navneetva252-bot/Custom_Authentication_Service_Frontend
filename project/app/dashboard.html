@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../dashboard.css" />
   </head>
-  <body class="dashboard-body">
+  <body class="dashboard-body theme-light">
     <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
       <div class="loader-container">
@@ -90,6 +90,9 @@
           <li><a href="support.html" class="nav-link">Support</a></li>
         </ul>
         <div class="nav-actions">
+          <button class="nav-button theme-toggle" data-theme-toggle title="Switch to dark mode" aria-label="Switch to dark mode">
+            <span class="material-icons" data-theme-icon>dark_mode</span>
+          </button>
           <button id="navNotifications" class="nav-button" title="Notifications">
             <span class="material-icons">notifications</span>
             <span class="notification-badge" id="notificationBadge">3</span>
@@ -361,6 +364,7 @@
     </script>
     
     <script src="../env.js"></script>
+    <script src="theme-toggle.js"></script>
     <script>
       console.log("✅ env.js loaded");
       console.log("   - RUNTIME_ENV:", window.RUNTIME_ENV);
