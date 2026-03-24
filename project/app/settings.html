@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../dashboard.css" />
   </head>
-  <body class="dashboard-body">
+  <body class="dashboard-body theme-light">
     <!-- Loading Overlay (for forms) -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loading-box">
@@ -37,6 +37,9 @@
           </h1>
           <p class="header-subtitle">Manage your account preferences and security</p>
         </div>
+        <button class="btn-secondary theme-page-toggle" data-theme-toggle title="Switch to dark mode" aria-label="Switch to dark mode">
+          <span class="material-icons" data-theme-icon>dark_mode</span>
+        </button>
       </header>
 
       <!-- Tabs Navigation -->
@@ -248,6 +251,7 @@
     </script>
 
     <script src="../env.js"></script>
+    <script src="theme-toggle.js"></script>
     <script src="../utils.js"></script>
     <script src="settings.js"></script>
   </body>
