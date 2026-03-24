@@ -620,3 +620,247 @@
 .accordion{
     width: 100%;
 }
+
+/* Theme Compatibility */
+.dashboard-body.theme-light .support-card,
+.dashboard-body.theme-light .modal-content,
+.dashboard-body.theme-light .accordion-item,
+.dashboard-body.theme-light .accordion-body,
+.dashboard-body.theme-light .support-status {
+  background: #ffffff;
+}
+
+.dashboard-body.theme-light .support-card,
+.dashboard-body.theme-light .modal-content,
+.dashboard-body.theme-light .accordion-item {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.dashboard-body.theme-light .support-card h3,
+.dashboard-body.theme-light .status-item h4,
+.dashboard-body.theme-light .modal-content h2,
+.dashboard-body.theme-light .form-group label,
+.dashboard-body.theme-light .contact-method h3,
+.dashboard-body.theme-light .faq-category h3,
+.dashboard-body.theme-light .accordion-header {
+  color: #0f172a;
+}
+
+.dashboard-body.theme-light .support-card p,
+.dashboard-body.theme-light .status-item p,
+.dashboard-body.theme-light .contact-method p,
+.dashboard-body.theme-light .contact-method small,
+.dashboard-body.theme-light .modal-sections section p,
+.dashboard-body.theme-light .accordion-body p,
+.dashboard-body.theme-light .tips-list ul li {
+  color: #475569;
+}
+
+.dashboard-body.theme-light .support-status {
+  background: linear-gradient(135deg, #f8faff 0%, #eef3ff 100%);
+  border: 1px solid rgba(99, 102, 241, 0.16);
+}
+
+.dashboard-body.theme-light .feature-tag {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.dashboard-body.theme-light .accordion-header {
+  background: #f8faff;
+}
+
+.dashboard-body.theme-light .accordion-header:hover {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.dashboard-body.theme-light .accordion-body {
+  border-left-color: #cbd5e1;
+}
+
+.dashboard-body.theme-light .accordion-body.active {
+  border-left-color: #6366f1;
+}
+
+.dashboard-body.theme-dark .support-header {
+  background: linear-gradient(135deg, #1a2940 0%, #312e81 100%);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.48);
+}
+
+.dashboard-body.theme-dark .support-card {
+  background: linear-gradient(180deg, #0f172a 0%, #13233f 100%);
+  box-shadow: 0 18px 38px rgba(2, 6, 23, 0.48);
+  border-left-color: #a5b4fc;
+}
+
+.dashboard-body.theme-dark .support-card h3,
+.dashboard-body.theme-dark .status-item h4,
+.dashboard-body.theme-dark .modal-content h2,
+.dashboard-body.theme-dark .form-group label,
+.dashboard-body.theme-dark .contact-method h3,
+.dashboard-body.theme-dark .faq-category h3,
+.dashboard-body.theme-dark .accordion-header {
+  color: #e2e8f0;
+}
+
+.dashboard-body.theme-dark .support-card p,
+.dashboard-body.theme-dark .status-item p,
+.dashboard-body.theme-dark .contact-method p,
+.dashboard-body.theme-dark .contact-method small,
+.dashboard-body.theme-dark .modal-sections section p,
+.dashboard-body.theme-dark .accordion-body p,
+.dashboard-body.theme-dark .tips-list ul li {
+  color: #94a3b8;
+}
+
+.dashboard-body.theme-dark .feature-tag {
+  background: rgba(129, 140, 248, 0.22);
+  color: #c7d2fe;
+}
+
+.dashboard-body.theme-dark .support-status,
+.dashboard-body.theme-dark .tips-list,
+.dashboard-body.theme-dark .contact-method {
+  background: linear-gradient(180deg, #0f172a 0%, #111f38 100%);
+  border: 1px solid rgba(129, 140, 248, 0.2);
+}
+
+.dashboard-body.theme-dark .status-item .status-icon,
+.dashboard-body.theme-dark .contact-method .material-icons {
+  color: #a5b4fc;
+}
+
+.dashboard-body.theme-dark .modal {
+  background: rgba(2, 6, 23, 0.75);
+}
+
+.dashboard-body.theme-dark .modal-content {
+  background: linear-gradient(180deg, #0b1220 0%, #111f37 100%);
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  box-shadow: 0 25px 55px rgba(2, 6, 23, 0.65);
+}
+
+.dashboard-body.theme-dark .modal-close {
+  background: rgba(148, 163, 184, 0.15);
+  color: #cbd5e1;
+}
+
+.dashboard-body.theme-dark .modal-close:hover {
+  background: #818cf8;
+  color: #0f172a;
+}
+
+.dashboard-body.theme-dark .accordion-item {
+  border-color: rgba(129, 140, 248, 0.24);
+  background: #0b1324;
+}
+
+.dashboard-body.theme-dark .accordion-header {
+  background: #10192d;
+}
+
+.dashboard-body.theme-dark .accordion-header:hover {
+  background: #182742;
+  color: #c7d2fe;
+}
+
+.dashboard-body.theme-dark .accordion-header.active {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #f8fafc;
+}
+
+.dashboard-body.theme-dark .accordion-body {
+  background: #0f172a;
+  border-left-color: #334155;
+}
+
+.dashboard-body.theme-dark .accordion-body.active {
+  border-left-color: #818cf8;
+}
+
+.dashboard-body.theme-dark .faq-category h3 {
+  border-bottom-color: rgba(148, 163, 184, 0.2);
+}
+
+.dashboard-body.theme-dark .form-group input,
+.dashboard-body.theme-dark .form-group select,
+.dashboard-body.theme-dark .form-group textarea {
+  background: #0a1426;
+  border-color: rgba(129, 140, 248, 0.26);
+  color: #e2e8f0;
+}
+
+.dashboard-body.theme-dark .form-group input::placeholder,
+.dashboard-body.theme-dark .form-group textarea::placeholder {
+  color: #64748b;
+}
+
+.dashboard-body.theme-dark .form-group input:hover,
+.dashboard-body.theme-dark .form-group select:hover,
+.dashboard-body.theme-dark .form-group textarea:hover {
+  background: #101a2d;
+}
+
+.dashboard-body.theme-dark .form-group input:focus,
+.dashboard-body.theme-dark .form-group select:focus,
+.dashboard-body.theme-dark .form-group textarea:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.18);
+}
+
+/* Layered Component Polish */
+.dashboard-body.theme-light .support-header {
+  background: linear-gradient(145deg, #4f46e5 0%, #3b82f6 100%);
+}
+
+.dashboard-body.theme-light .support-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.dashboard-body.theme-light .contact-method,
+.dashboard-body.theme-light .tips-list {
+  background: linear-gradient(145deg, #f8fbff 0%, #eef3ff 100%);
+}
+
+.dashboard-body.theme-light .modal-content {
+  background: linear-gradient(145deg, #ffffff 0%, #f9fbff 100%);
+}
+
+.dashboard-body.theme-light .accordion-item {
+  background: #ffffff;
+}
+
+.dashboard-body.theme-light .accordion-body {
+  background: #fbfdff;
+}
+
+.dashboard-body.theme-dark .support-header {
+  background: linear-gradient(145deg, #233a5f 0%, #3730a3 100%);
+}
+
+.dashboard-body.theme-dark .support-card {
+  background: linear-gradient(145deg, #12233d 0%, #182d4d 100%);
+}
+
+.dashboard-body.theme-dark .support-status {
+  background: linear-gradient(145deg, #13243d 0%, #182f50 100%);
+}
+
+.dashboard-body.theme-dark .contact-method,
+.dashboard-body.theme-dark .tips-list {
+  background: linear-gradient(145deg, #102036 0%, #172a46 100%);
+}
+
+.dashboard-body.theme-dark .modal-content {
+  background: linear-gradient(145deg, #0d1b31 0%, #132743 100%);
+}
+
+.dashboard-body.theme-dark .accordion-item {
+  background: #102036;
+}
+
+.dashboard-body.theme-dark .accordion-body {
+  background: #0f1d33;
+}
