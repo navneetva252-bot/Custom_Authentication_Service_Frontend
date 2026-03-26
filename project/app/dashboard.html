@@ -79,8 +79,8 @@
       <!-- Top Navigation Bar -->
       <nav class="top-nav">
         <div class="nav-brand">
-          <span class="material-icons nav-logo">security</span>
-          <span class="brand-name">SecureAuth</span>
+          <span class="material-icons nav-logo">assignment</span>
+          <span class="brand-name">ReqFlow</span>
         </div>
         <ul class="nav-menu">
           <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
@@ -126,10 +126,10 @@
       <header class="dash-header">
         <div class="header-content">
           <h1 class="header-title">
-            <span class="material-icons header-icon">dashboard</span>
-            Dashboard
+            <span class="material-icons header-icon">engineering</span>
+            ReqFlow Platform
           </h1>
-          <p class="header-subtitle" id="welcomeMsg">Welcome back! Manage your account securely</p>
+          <p class="header-subtitle">Intelligent Requirement Engineering & Traceability Management</p>
         </div>
         <button id="signoutBtn" class="btn-signout">
           <span class="material-icons">logout</span>
@@ -137,122 +137,175 @@
         </button>
       </header>
 
-      <!-- Account Info Section -->
-      <div class="account-section">
-        <div class="account-card" id="accountCard">
-          <div class="account-header">
-            <span class="material-icons account-icon">person</span>
-            <h2>Account Information</h2>
-            <span id="accountStatus" class="status-badge">Loading...</span>
+      <!-- Company Overview Section -->
+      <div class="company-overview">
+        <div class="overview-card">
+          <div class="overview-icon">
+            <span class="material-icons">public</span>
           </div>
-          <div id="accountInfo" class="account-info">Loading...</div>
+          <h2>About ReqFlow</h2>
+          <p>ReqFlow is the leading requirement engineering platform trusted by 500+ companies. We help organizations capture, manage, and trace requirements with precision, ensuring CMMI compliance and traceability excellence.</p>
+          <a href="#features" class="btn-learn-more">Learn More →</a>
         </div>
-      </div>
-
-      <!-- Account Health Section -->
-      <div class="health-section">
-        <div class="health-card">
-          <div class="health-header">
-            <div class="health-title">
-              <span class="material-icons health-icon">health_and_safety</span>
-              <div>
-                <h3>Account Health</h3>
-                <p>Your security score</p>
+        
+        <!-- Enhanced Stats Section with Icons and Counters -->
+        <div class="overview-stats">
+          <div class="stat-item">
+            <div class="stat-icon">
+              <span class="material-icons">business</span>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-number" data-target="500">0</h3>
+              <p class="stat-title">Companies</p>
+              <div class="stat-bar">
+                <div class="stat-bar-fill" style="width: 85%"></div>
               </div>
             </div>
-            <span class="health-score" id="healthScore">65%</span>
           </div>
-          <div class="health-bar">
-            <div class="health-progress" id="healthProgress" style="width: 65%;"></div>
-          </div>
-          <div class="health-tips">
-            <div class="tip-item">
-              <span class="material-icons tip-icon">check_circle</span>
-              <span>Email verified</span>
+          
+          <div class="stat-item">
+            <div class="stat-icon">
+              <span class="material-icons">assignment</span>
             </div>
-            <div class="tip-item" id="twoFATip" style="cursor: pointer; background: rgba(240, 147, 251, 0.1) !important; border-left: 2px solid #f093fb;">
-              <span class="material-icons tip-icon" style="color: #fbbf24;">info</span>
-              <span>Enable 2FA for extra security</span>
+            <div class="stat-content">
+              <h3 class="stat-number" data-target="50000">0</h3>
+              <p class="stat-title">Requirements Managed</p>
+              <div class="stat-bar">
+                <div class="stat-bar-fill" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-item">
+            <div class="stat-icon">
+              <span class="material-icons">check_circle</span>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-number" data-target="99">0<span class="stat-decimals">.9%</span></h3>
+              <p class="stat-title">Traceability Coverage</p>
+              <div class="stat-bar">
+                <div class="stat-bar-fill" style="width: 99%"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-item">
+            <div class="stat-icon">
+              <span class="material-icons">timer</span>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-number">8<span class="stat-unit">mins</span></h3>
+              <p class="stat-title">Avg Response</p>
+              <div class="stat-bar">
+                <div class="stat-bar-fill" style="width: 88%"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Metrics Grid -->
-      <div class="metrics-grid">
-
-        <!-- Account Stats Card -->
-        <div class="metric-card stats-card">
-          <div class="metric-header">
-            <span class="material-icons metric-icon">analytics</span>
-            <h3>Account Stats</h3>
+      <!-- Key Features Section -->
+      <div class="features-section" id="features">
+        <h2 class="section-header">Core Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <span class="material-icons feature-icon">description</span>
+            <h3>Requirement Capture</h3>
+            <p>Structured templates and workflows for capturing functional and non-functional requirements</p>
           </div>
-          <div class="metric-body">
-            <div class="stat-item">
-              <p class="stat-label">Active Sessions</p>
-              <p class="stat-value" id="sessionsCount">0</p>
-            </div>
-            <div class="stat-item">
-              <p class="stat-label">Last Login</p>
-              <p class="stat-value" id="lastLogin">-</p>
-            </div>
+          <div class="feature-card">
+            <span class="material-icons feature-icon">trending_up</span>
+            <h3>Version Control</h3>
+            <p>Complete audit trail with version history, change tracking, and rollback capabilities</p>
+          </div>
+          <div class="feature-card">
+            <span class="material-icons feature-icon">link</span>
+            <h3>Traceability Matrix</h3>
+            <p>Map requirements to test cases, code, and documentation automatically</p>
+          </div>
+          <div class="feature-card">
+            <span class="material-icons feature-icon">timeline</span>
+            <h3>Impact Analysis</h3>
+            <p>Understand change impacts across entire requirement chain instantly</p>
+          </div>
+          <div class="feature-card">
+            <span class="material-icons feature-icon">group_work</span>
+            <h3>Real-time Collaboration</h3>
+            <p>Team collaboration with comments, reviews, and approval workflows</p>
+          </div>
+          <div class="feature-card">
+            <span class="material-icons feature-icon">analytics</span>
+            <h3>Analytics & Reporting</h3>
+            <p>Track metrics, generate reports, and gain insights into requirements health</p>
           </div>
         </div>
-
-        <!-- Account Age Card -->
-        <div class="metric-card age-card">
-          <div class="metric-header">
-            <span class="material-icons metric-icon">calendar_today</span>
-            <h3>Account Age</h3>
-          </div>
-          <div class="metric-body">
-            <p class="metric-label">Member Since</p>
-            <p class="metric-value" id="createdDate">-</p>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Quick Actions Grid -->
-      <div class="quick-actions-section">
+      <!-- Why Choose SecureAuth Section -->
+      <div class="why-choose-section">
+        <div class="why-header">
+          <h2>Why Choose ReqFlow?</h2>
+          <p>Trusted by 500+ companies for requirement excellence</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card">
+            <span class="material-icons why-icon">verified</span>
+            <h3>CMMI & ISO Compliant</h3>
+            <p>CMMI Maturity Level 3 certified. Ensures best practices in requirement engineering processes.</p>
+          </div>
+          <div class="why-card">
+            <span class="material-icons why-icon">trending_up</span>
+            <h3>Proven Methodology</h3>
+            <p>10+ years of expertise helping teams achieve 99.9% requirement traceability coverage.</p>
+          </div>
+          <div class="why-card">
+            <span class="material-icons why-icon">support_agent</span>
+            <h3>Expert Guidance</h3>
+            <p>Dedicated requirement engineering consultants with 8-minute average response time.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Solutions Section -->
+      <div class="solutions-section">
         <h3 class="section-title">
-          <span class="material-icons">explore</span>
-          Quick Navigation
+          <span class="material-icons">lightbulb</span>
+          Solutions for Every Need
         </h3>
         <div class="actions-grid">
           
-          <!-- Active Sessions Card -->
-          <a href="sessions.html" class="action-card sessions-card">
-            <div class="action-icon sessions-icon">
-              <span class="material-icons">devices</span>
+          <!-- Enterprise Solution -->
+          <a href="support.html" class="action-card solutions-card">
+            <div class="action-icon solutions-icon">
+              <span class="material-icons">business</span>
             </div>
             <div class="action-content">
-              <h4>Active Sessions</h4>
-              <p>View and manage your devices</p>
+              <h4>Enterprise Edition</h4>
+              <p>Full-featured platform for large organizations with CMMI compliance</p>
             </div>
             <span class="material-icons action-arrow">arrow_forward</span>
           </a>
 
-          <!-- Auth Logs Card -->
-          <a href="auth-logs.html" class="action-card logs-card">
-            <div class="action-icon logs-icon">
-              <span class="material-icons">history</span>
+          <!-- Integration Framework -->
+          <a href="support.html" class="action-card developer-card">
+            <div class="action-icon developer-icon">
+              <span class="material-icons">code</span>
             </div>
             <div class="action-content">
-              <h4>Auth Logs</h4>
-              <p>Check login activity history</p>
+              <h4>Integration APIs</h4>
+              <p>Connect with JIRA, Azure DevOps, Confluence, and 50+ tools</p>
             </div>
             <span class="material-icons action-arrow">arrow_forward</span>
           </a>
 
-          <!-- Settings Card -->
-          <a href="settings.html" class="action-card settings-card">
-            <div class="action-icon settings-icon">
-              <span class="material-icons">settings</span>
+          <!-- Cloud Integration -->
+          <a href="support.html" class="action-card cloud-card">
+            <div class="action-icon cloud-icon">
+              <span class="material-icons">cloud</span>
             </div>
             <div class="action-content">
-              <h4>Account Settings</h4>
-              <p>Manage security & preferences</p>
+              <h4>Flexible Deployment</h4>
+              <p>Cloud SaaS or self-hosted on AWS, Azure, or private servers</p>
             </div>
             <span class="material-icons action-arrow">arrow_forward</span>
           </a>
@@ -260,32 +313,32 @@
         </div>
       </div>
 
-      <!-- Quick Tips Section -->
-      <div class="tips-section">
+      <!-- Customer Testimonials Section -->
+      <div class="testimonials-section">
         <h3 class="section-title">
-          <span class="material-icons">lightbulb</span>
-          Security Tips
+          <span class="material-icons">favorite</span>
+          What Our Customers Say
         </h3>
-        <div class="tips-grid">
-          <div class="tip-card">
-            <span class="material-icons tip-icon">check_circle</span>
-            <h4>Enable 2FA</h4>
-            <p>Add an extra layer of protection to your account</p>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"ReqFlow transformed how we manage requirements. Traceability improved from 60% to 99.9% in weeks."</p>
+            <p class="testimonial-author">- Sarah Johnson, TechCorp PM Director</p>
           </div>
-          <div class="tip-card">
-            <span class="material-icons tip-icon">check_circle</span>
-            <h4>Strong Passwords</h4>
-            <p>Use unique passwords for important accounts</p>
+          <div class="testimonial-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Best requirement tool for agile teams. Version control and collaboration features are unmatched."</p>
+            <p class="testimonial-author">- Mike Chen, StartupXYZ Tech Lead</p>
           </div>
-          <div class="tip-card">
-            <span class="material-icons tip-icon">check_circle</span>
-            <h4>Check Activities</h4>
-            <p>Review your login history regularly</p>
+          <div class="testimonial-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"CMMI compliance made easy. ReqFlow automated our audit trails and impact analysis."</p>
+            <p class="testimonial-author">- Emma Davis, FinanceElite QA Head</p>
           </div>
-          <div class="tip-card">
-            <span class="material-icons tip-icon">check_circle</span>
-            <h4>Verify Devices</h4>
-            <p>Sign out from unused devices</p>
+          <div class="testimonial-card">
+            <div class="stars">⭐⭐⭐⭐⭐</div>
+            <p class="testimonial-text">"Seamless JIRA integration. Our team achieved 100% requirement-to-code traceability."</p>
+            <p class="testimonial-author">- Alex Rodriguez, DevOps Engineer</p>
           </div>
         </div>
       </div>
@@ -298,8 +351,8 @@
       <footer class="dash-footer">
         <div class="footer-content">
           <div class="footer-section">
-            <h4>SecureAuth</h4>
-            <p>Enterprise-grade authentication and account management platform</p>
+            <h4>ReqFlow</h4>
+            <p>Intelligent requirement engineering and traceability management platform</p>
           </div>
           <div class="footer-section">
             <h4>Quick Links</h4>
@@ -330,7 +383,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; 2026 SecureAuth. All rights reserved.</p>
+          <p>&copy; 2026 ReqFlow. All rights reserved.</p>
           <div class="footer-links">
             <a href="#">Privacy Policy</a>
             <span class="separator">|</span>

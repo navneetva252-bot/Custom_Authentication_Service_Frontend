@@ -10,6 +10,51 @@ if (!window.RUNTIME_ENV) {
 const API_BASE = window.RUNTIME_ENV?.API_BASE_URL || "NOT_DEFINED";
 console.log("📍 API_BASE:", API_BASE);
 
+// ===== ANIMATE STAT COUNTERS =====
+function animateStatCounters() {
+  const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+  
+  statNumbers.forEach(element => {
+    const target = parseInt(element.getAttribute('data-target'));
+    const duration = 1500; // 1.5 seconds
+    const startTime = performance.now();
+    
+    const animate = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuad = 1 - Math.pow(1 - progress, 2);
+      const current = Math.floor(target * easeOutQuad);
+      
+      // Format with + symbol for large numbers
+      let displayValue = current.toLocaleString();
+      if (target >= 100) displayValue += '+';
+      
+      element.textContent = displayValue;
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  });
+  
+  // Animate progress bars
+  const progressBars = document.querySelectorAll('.stat-bar-fill');
+  progressBars.forEach((bar, index) => {
+    setTimeout(() => {
+      bar.style.animation = `growWidth ${1.2}s cubic-bezier(0.34, 1.56, 0.64, 1) forwards`;
+      const targetWidth = bar.style.width;
+      bar.style.setProperty('--target-width', targetWidth);
+    }, index * 100); // Stagger the animations
+  });
+}
+
+// Call on page load
+setTimeout(animateStatCounters, 500);
+
 // ===== Toggle Eye Icon for Password Fields =====
 document.querySelectorAll(".toggle-eye").forEach(eye => {
   eye.addEventListener("click", () => {
@@ -207,8 +252,10 @@ async function loadAccount() {
   const accountInfo = document.getElementById("accountInfo");
   const accountStatus = document.getElementById("accountStatus");
   
+  // If account elements don't exist, just show the page (marketing layout)
   if (!accountInfo || !accountStatus) {
-    console.error("❌ DOM elements not found");
+    console.log("⚠️ Account elements not found - showing page with marketing content");
+    showPageContent();
     return;
   }
   
@@ -219,12 +266,18 @@ async function loadAccount() {
     const endpoint = `${API_BASE}/auth/me`;
     console.log("Fetching from:", endpoint);
     
+    // Add 10 second timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
     const res = await fetch(endpoint, {
       method: "GET",
       headers: authHeaders(),
       credentials: "include",
+      signal: controller.signal
     });
     
+    clearTimeout(timeoutId);
     console.log("Response status:", res.status);
     saveNewToken(res);
 
@@ -469,12 +522,19 @@ async function loadSessionsCount() {
     if (!sessionsCountEl) return;
     
     const endpoint = `${API_BASE}/auth/active-sessions`;
+    
+    // Add 5 second timeout for sessions
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    
     const res = await fetch(endpoint, {
       method: "GET",
       headers: authHeaders(),
       credentials: "include",
+      signal: controller.signal
     });
     
+    clearTimeout(timeoutId);
     const data = await res.json();
     
     if (data.success && Array.isArray(data.data)) {
@@ -666,3 +726,14 @@ if (document.readyState === 'loading') {
   console.log("🚀 Loading account data...");
   loadAccount();
 }
+
+// Fallback timeout - ensure page loads even if something hangs
+setTimeout(() => {
+  console.warn("⚠️ Page load timeout (15s) - forcing page to show");
+  if (LoadingManager) {
+    LoadingManager.hidePageLoader();
+    const container = document.querySelector('.dash-container');
+    if (container) container.classList.remove('loading-state');
+    addElementAnimations();
+  }
+}, 15000);
