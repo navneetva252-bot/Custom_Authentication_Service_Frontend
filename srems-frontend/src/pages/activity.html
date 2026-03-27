@@ -1,0 +1,65 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="page-title-section">
+      <h1 class="page-title">Activity Log</h1>
+      <p class="page-subtitle">Track all project changes and activities</p>
+    </div>
+    <button class="btn btn-secondary" id="btnExportActivity">
+      <span class="btn-icon">📥</span> Export Log
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label for="filterActivityType" class="filter-label">Activity Type</label>
+      <select id="filterActivityType" class="filter-select">
+        <option value="">All Activities</option>
+        <option value="create">Created</option>
+        <option value="update">Updated</option>
+        <option value="delete">Deleted</option>
+        <option value="comment">Comment</option>
+        <option value="approve">Approved</option>
+        <option value="reject">Rejected</option>
+        <option value="status-change">Status Changed</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="filterActivityEntity" class="filter-label">Entity Type</label>
+      <select id="filterActivityEntity" class="filter-select">
+        <option value="">All Entities</option>
+        <option value="requirement">Requirement</option>
+        <option value="project">Project</option>
+        <option value="scope">Scope</option>
+        <option value="feature">Feature</option>
+        <option value="stakeholder">Stakeholder</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="filterActivityDate" class="filter-label">Date Range</label>
+      <input type="date" id="filterActivityDate" class="filter-input" />
+    </div>
+
+    <div class="filter-group">
+      <label for="searchActivity" class="filter-label">Search</label>
+      <input type="text" id="searchActivity" class="filter-input" placeholder="Search activities..." />
+    </div>
+  </div>
+
+  <!-- Activity Timeline -->
+  <div id="activityContainer" class="activity-timeline">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      Loading activity log...
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div id="emptyActivity" class="empty-state hidden">
+    <div class="empty-state-icon">📋</div>
+    <h3>No Activities Yet</h3>
+    <p>Activities will appear here as you work on your project</p>
+  </div>
+</div>
