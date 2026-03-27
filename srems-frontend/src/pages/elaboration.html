@@ -1,0 +1,96 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="page-title-section">
+      <h1 class="page-title">Elaboration</h1>
+      <p class="page-subtitle">Detailed requirements analysis and breakdown</p>
+    </div>
+    <button class="btn btn-primary" id="btnStartElaboration">
+      <span class="btn-icon">▶️</span> Start Elaboration
+    </button>
+  </div>
+
+  <!-- Status Overview -->
+  <div class="elaboration-status">
+    <div class="status-card">
+      <h4>Requirements to Elaborate</h4>
+      <div class="status-value" id="reqToElaborate">0</div>
+    </div>
+    <div class="status-card">
+      <h4>In Progress</h4>
+      <div class="status-value" id="reqInProgress">0</div>
+    </div>
+    <div class="status-card">
+      <h4>Completed</h4>
+      <div class="status-value" id="reqCompleted">0</div>
+    </div>
+    <div class="status-card">
+      <h4>Progress</h4>
+      <div class="progress-bar">
+        <div id="elaborationProgress" class="progress-fill" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Elaboration Items -->
+  <div id="elaborationContainer" class="elaboration-items">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      Loading requirements...
+    </div>
+  </div>
+</div>
+
+<!-- Elaboration Detail Modal -->
+<div id="elaborationModal" class="modal hidden">
+  <div class="modal-content modal-xl">
+    <div class="modal-header">
+      <h2 id="elaborationTitle">Elaborate Requirement</h2>
+      <button class="modal-close" data-close-modal="elaborationModal">&times;</button>
+    </div>
+    <form id="elaborationForm" class="form-stack">
+      <div class="form-group">
+        <label class="form-label">Requirement</label>
+        <div class="requirement-display" id="reqDisplay"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="elab-acceptance-criteria" class="form-label">Acceptance Criteria *</label>
+          <textarea id="elab-acceptance-criteria" class="form-control" rows="4" required maxlength="1000"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="elab-dependencies" class="form-label">Dependencies</label>
+          <textarea id="elab-dependencies" class="form-control" rows="3" maxlength="500"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="elab-effort" class="form-label">Effort (Hours)</label>
+          <input type="number" id="elab-effort" class="form-control" min="0" step="0.5" />
+        </div>
+
+        <div class="form-group">
+          <label for="elab-risk-level" class="form-label">Risk Level</label>
+          <select id="elab-risk-level" class="form-control">
+            <option value="">Select Level</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="elab-notes" class="form-label">Technical Notes</label>
+        <textarea id="elab-notes" class="form-control" rows="3" maxlength="500"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" data-close-modal="elaborationModal">Save & Close</button>
+        <button type="submit" class="btn btn-primary">Save & Next</button>
+      </div>
+    </form>
+  </div>
+</div>
