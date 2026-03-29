@@ -19,7 +19,7 @@ class ApiClient {
    * Get auth token from storage
    */
   getAuthToken() {
-    return localStorage.getItem('auth_token') || null;
+    return localStorage.getItem('accessToken') || null;
   }
 
   /**
@@ -30,14 +30,19 @@ class ApiClient {
   }
 
   /**
-   * Build headers with auth token if available
+   * Build headers with auth token and device info
    */
   buildHeaders() {
     const headers = { ...this.defaultHeaders };
     const token = this.getAuthToken();
     
+    // Add required device headers for backend authorization
+    headers['x-device-uuid'] = getDeviceUUID();
+    headers['x-device-type'] = getDeviceType();
+    
+    // Add access token in correct header format (NOT Authorization Bearer)
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+      headers['x-access-token'] = token;
     }
     
     return headers;
