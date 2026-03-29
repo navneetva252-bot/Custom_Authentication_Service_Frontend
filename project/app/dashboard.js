@@ -94,6 +94,36 @@ function saveNewToken(res) {
   }
 }
 
+/**
+ * Navigate to Software Management Dashboard
+ * Validates token and device UUID before redirecting
+ */
+function goToSoftwareManagement() {
+  // Check if token exists
+  const token = localStorage.getItem("accessToken");
+  const deviceUUID = localStorage.getItem("deviceUUID");
+  
+  if (!token) {
+    console.warn("❌ No authentication token found");
+    alert("❌ Session expired. Please login again.");
+    window.location.href = "./login.html";
+    return;
+  }
+  
+  if (!deviceUUID) {
+    console.warn("❌ Device not registered");
+    alert("❌ Device not registered. Please refresh the page.");
+    return;
+  }
+  
+  console.log("✅ Redirecting to Software Management Dashboard");
+  console.log("   Token length:", token.length);
+  console.log("   Device UUID:", deviceUUID);
+  
+  // Redirect to Software Management Frontend Dashboard (Port 5500 - hash-based routing)
+  window.location.href = "http://127.0.0.1:5500/srems-frontend/index.html#/";
+}
+
 // ===== NOTIFICATIONS SYSTEM =====
 let notifications = [
   {
@@ -598,6 +628,17 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("👤 Profile clicked");
       window.location.href = "settings.html";
     });
+  }
+  
+  // Setup Software Management Button in Nav
+  const softwareBtn = document.getElementById("goToSoftwareBtn");
+  if (softwareBtn) {
+    softwareBtn.addEventListener("click", () => {
+      console.log("🚀 Software Management button clicked");
+      goToSoftwareManagement();
+    });
+  } else {
+    console.warn("⚠️ Software Management button not found (element id: goToSoftwareBtn)");
   }
   
   const twoFATip = document.getElementById("twoFATip");
