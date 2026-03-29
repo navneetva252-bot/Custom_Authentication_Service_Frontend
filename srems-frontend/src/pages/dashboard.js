@@ -22,7 +22,7 @@ export class DashboardPage {
   async loadDashboardData() {
     try {
       // Load projects
-      this.projects = await ProjectsService.getProjects();
+      this.projects = await projectsService.getProjects();
       this.renderMetrics();
       this.renderRecentProjects();
       this.renderRecentActivity();
