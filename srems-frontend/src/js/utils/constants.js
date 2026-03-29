@@ -262,7 +262,9 @@ export const PAGINATION = {
 // ═════════════════════════════════════════════════════════════════════════════
 
 export const STORAGE_KEYS = {
-  AUTH_TOKEN: 'auth_token',
+  accessToken: 'accessToken',
+  deviceUUID: 'deviceUUID',
+  deviceName: 'deviceName',
   USER_ID: 'user_id',
   USER_ROLE: 'user_role',
   CURRENT_PROJECT: 'current_project',
