@@ -60,9 +60,28 @@ class App {
       }
     });
 
+    // Handle sidebar toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('mainSidebar');
+    if (sidebarToggle && sidebar) {
+      sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+      });
+
+      // Close sidebar when a link is clicked
+      sidebar.querySelectorAll('a[data-link]').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 769) {
+            sidebar.classList.remove('show');
+          }
+        });
+      });
+    }
+
     // Handle modal close
     document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal-backdrop')) {
+      const modal = document.getElementById('appModal');
+      if (modal && e.target === modal) {
         this.closeModal();
       }
       
@@ -80,13 +99,20 @@ class App {
       }
     });
 
-    // Listen for Enter key in modals
+    // Listen for Escape key to close modal
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const modal = document.querySelector('.modal.show');
-        if (modal) {
+        const modal = document.getElementById('appModal');
+        if (modal && modal.classList.contains('show')) {
           this.closeModal();
         }
+      }
+    });
+
+    // Handle resize to hide sidebar on large screens
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 769 && sidebar) {
+        sidebar.classList.remove('show');
       }
     });
   }
@@ -107,16 +133,29 @@ class App {
       const hash = window.location.hash;
       if (hash) {
         this.loadPage(hash.substring(2));
+      } else {
+        this.loadPage('/');
       }
     });
+  }
 
-    // Update active nav link
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      });
+  /**
+   * Update active menu item in sidebar
+   */
+  updateActiveMenu(route) {
+    // Remove active class from all menu items
+    document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+      item.classList.remove('active');
     });
+
+    // Add active class to current page menu item
+    const cleanRoute = route.split('?')[0] || '/';
+    const routeName = cleanRoute === '/' ? 'dashboard' : cleanRoute;
+
+    const activeLink = document.querySelector(`.sidebar-menu-item[data-page="${routeName}"]`);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
   }
 
   /**
@@ -143,6 +182,9 @@ class App {
       const html = await response.text();
       mainContent.innerHTML = html;
       console.log('[App] Page HTML loaded');
+
+      // Update active menu item in sidebar
+      this.updateActiveMenu(route);
 
       // Load and initialize page controller
       await this.initializePageController(route);
