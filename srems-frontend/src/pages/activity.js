@@ -1,5 +1,6 @@
 import { store } from '../js/store/store.js';
 import { showToast, formatDate, debounce } from '../js/utils/helpers.js';
+import activityTrackerService from '../js/services/activity-tracker.service.js';
 
 export class ActivityPage {
   constructor() {
@@ -21,9 +22,21 @@ export class ActivityPage {
     document.getElementById('searchActivity')?.addEventListener('input', debounce(() => this.applyFilters(), 300));
   }
 
-  loadActivities() {
-    // In a real app, this would come from the backend
-    // For demo, we'll use some mock data
+  async loadActivities() {
+    try {
+      const data = await activityTrackerService.getActivities();
+      this.activities = (data.data || data || []);
+      this.filteredActivities = this.activities;
+      this.renderActivities();
+    } catch (error) {
+      console.error('Failed to load activities:', error);
+      // Fallback to mock data if backend is not available
+      this.loadMockActivities();
+    }
+  }
+
+  loadMockActivities() {
+    // Fallback mock data when backend is not available
     const mockActivities = [
       {
         id: '1',
