@@ -25,6 +25,7 @@ export const API_CONFIG = {
     ACTIVITY_TRACKER: '/activity-trackers',
     REQUIREMENTS: '/requirements',
     ELICITATION: '/elicitation',
+    INCEPTION: '/inception',
   },
 
   // HTTP Methods
