@@ -1,0 +1,56 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="page-title-section">
+      <h1 class="page-title">Product Requests</h1>
+      <p class="page-subtitle">Manage and track feature and enhancement requests</p>
+    </div>
+    <button class="btn btn-primary" id="btnCreateProductRequest">
+      <span class="btn-icon">➕</span> New Request
+    </button>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label for="filterPriority" class="filter-label">Priority</label>
+      <select id="filterPriority" class="filter-select">
+        <option value="">All Priorities</option>
+        <option value="critical">Critical</option>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="filterRequestStatus" class="filter-label">Status</label>
+      <select id="filterRequestStatus" class="filter-select">
+        <option value="">All Status</option>
+        <option value="submitted">Submitted</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="searchProductRequest" class="filter-label">Search</label>
+      <input type="text" id="searchProductRequest" class="filter-input" placeholder="Search requests..." />
+    </div>
+  </div>
+
+  <!-- Product Requests List -->
+  <div id="productRequestContainer" class="list-container">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading product requests...</p>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div id="emptyProductRequest" class="empty-state hidden">
+    <div class="empty-state-icon">📝</div>
+    <h3>No Product Requests</h3>
+    <p>Create a new product request to track feature and enhancement requests</p>
+    <button class="btn btn-primary" id="btnCreateProductRequestEmpty">Create First Request</button>
+  </div>
+</div>
