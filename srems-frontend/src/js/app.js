@@ -309,7 +309,11 @@ class App {
       'negotiation': './src/pages/negotiation.html',
       'specification': './src/pages/specification.html',
       'validation': './src/pages/validation.html',
-      'activity': './src/pages/activity.html'
+      'activity': './src/pages/activity.html',
+      'elicitation': './src/pages/elicitation.html',
+      'inception': './src/pages/inception.html',
+      'product-request': './src/pages/product-request.html',
+      'product-vision': './src/pages/product-vision.html'
     };
 
     const cleanRoute = route.split('?')[0]; // Remove query params
@@ -332,6 +336,10 @@ class App {
       'specification': () => import('../pages/specification.js').then(m => new m.SpecificationPage()),
       'validation': () => import('../pages/validation.js').then(m => new m.ValidationPage()),
       'activity': () => import('../pages/activity.js').then(m => new m.ActivityPage()),
+      'elicitation': () => import('../pages/elicitation.js').then(m => new m.ElicitationPage()),
+      'inception': () => import('../pages/inception.js').then(m => new m.InceptionPage()),
+      'product-request': () => import('../pages/product-request.js').then(m => new m.ProductRequestPage()),
+      'product-vision': () => import('../pages/product-vision.js').then(m => new m.ProductVisionPage()),
       '/': () => import('../pages/dashboard.js').then(m => new m.DashboardPage()),
     };
 
