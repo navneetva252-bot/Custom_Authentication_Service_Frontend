@@ -1,0 +1,45 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="page-title-section">
+      <h1 class="page-title">Product Vision</h1>
+      <p class="page-subtitle">Define and manage your product's long-term vision and strategy</p>
+    </div>
+    <button class="btn btn-primary" id="btnCreateProductVision">
+      <span class="btn-icon">➕</span> New Vision Document
+    </button>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <label for="filterVisionStatus" class="filter-label">Status</label>
+      <select id="filterVisionStatus" class="filter-select">
+        <option value="">All Status</option>
+        <option value="draft">Draft</option>
+        <option value="review">In Review</option>
+        <option value="published">Published</option>
+        <option value="archived">Archived</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="searchProductVision" class="filter-label">Search</label>
+      <input type="text" id="searchProductVision" class="filter-input" placeholder="Search vision documents..." />
+    </div>
+  </div>
+
+  <!-- Product Vision Cards -->
+  <div id="productVisionContainer" class="cards-container">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading product vision documents...</p>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div id="emptyProductVision" class="empty-state hidden">
+    <div class="empty-state-icon">🔮</div>
+    <h3>No Product Vision Documents</h3>
+    <p>Create a product vision document to guide your product strategy and roadmap</p>
+    <button class="btn btn-primary" id="btnCreateProductVisionEmpty">Create First Vision</button>
+  </div>
+</div>
