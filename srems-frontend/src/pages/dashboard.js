@@ -61,12 +61,16 @@ export class DashboardPage {
   async loadDashboardData() {
     try {
       // Load projects
-      this.projects = await projectsService.getProjects();
+      const data = await projectsService.getProjects();
+      this.projects = Array.isArray(data) ? data : [];
       this.renderMetrics();
       this.renderRecentProjects();
       this.renderRecentActivity();
     } catch (error) {
       showToast(error.message || 'Failed to load dashboard data', 'error');
+      // Initialize with empty array to prevent .filter/.reduce errors
+      this.projects = [];
+      this.renderMetrics();
     }
   }
 
