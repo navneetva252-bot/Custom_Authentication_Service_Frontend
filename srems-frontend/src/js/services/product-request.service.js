@@ -21,9 +21,17 @@ class ProductRequestService {
    * Get all product requests
    */
   async getProductRequests(page = 1, pageSize = 10) {
-    return apiClient.get(
+    const response = await apiClient.get(
       `${API_CONFIG.ENDPOINTS.PRODUCT_REQUESTS}/list?page=${page}&pageSize=${pageSize}`
     );
+    
+    // Check if response was successful
+    if (!response.success) {
+      throw new Error(response.message || 'Failed to fetch product requests');
+    }
+    
+    // Return the data array
+    return response.data || [];
   }
 
   /**
