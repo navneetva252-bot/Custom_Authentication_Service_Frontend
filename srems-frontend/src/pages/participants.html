@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participants - SREMS</title>
+  <link rel="stylesheet" href="../../styles/components.css">
+</head>
+<body>
+<div class="page-container">
+  <!-- Hero Section -->
+  <div class="page-hero">
+    <div class="hero-content">
+      <h1 class="page-title">👥 Participants</h1>
+      <p class="page-description">Manage stakeholders and participants involved in requirement engineering</p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary btn-lg" id="newParticipantBtn">
+        <span class="btn-icon">➕</span> Add Participant
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters & Search -->
+  <div class="filters-bar">
+    <div class="search-group">
+      <input 
+        type="text" 
+        id="searchParticipants" 
+        class="search-input" 
+        placeholder="Search participants..."
+      >
+    </div>
+    <div class="filter-group">
+      <select id="filterRole" class="filter-select">
+        <option value="">All Roles</option>
+        <option value="STAKEHOLDER">Stakeholder</option>
+        <option value="ANALYST">Analyst</option>
+        <option value="DEVELOPER">Developer</option>
+        <option value="MANAGER">Manager</option>
+        <option value="OTHER">Other</option>
+      </select>
+      <select id="filterStatus" class="filter-select">
+        <option value="">All Status</option>
+        <option value="ACTIVE">Active</option>
+        <option value="INACTIVE">Inactive</option>
+        <option value="PENDING">Pending</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Participants Table -->
+  <div id="participantsList" class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="participantsBody">
+        <tr class="placeholder-row">
+          <td colspan="6" style="text-align: center;">
+            <div class="loading-state">
+              <div class="spinner"></div>
+              <p>Loading participants...</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Participant Form Modal -->
+  <div id="participantModal" class="modal" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Participant</h2>
+        <button class="modal-close" type="button">&times;</button>
+      </div>
+      <form id="participantForm" class="modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="participantFirstName">First Name *</label>
+            <input type="text" id="participantFirstName" name="firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="participantLastName">Last Name *</label>
+            <input type="text" id="participantLastName" name="lastName" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="participantEmail">Email *</label>
+          <input type="email" id="participantEmail" name="email" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="participantRole">Role</label>
+            <select id="participantRole" name="role">
+              <option value="STAKEHOLDER">Stakeholder</option>
+              <option value="ANALYST">Analyst</option>
+              <option value="DEVELOPER">Developer</option>
+              <option value="MANAGER">Manager</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="participantDepartment">Department</label>
+            <input type="text" id="participantDepartment" name="department" placeholder="e.g., Engineering">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="participantPhone">Phone</label>
+          <input type="tel" id="participantPhone" name="phone">
+        </div>
+
+        <div class="form-group">
+          <label for="participantExpertise">Expertise/Skills</label>
+          <textarea id="participantExpertise" name="expertise" rows="2" placeholder="Comma-separated skills"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="participantIsActive" name="isActive" checked>
+            Active Participant
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelParticipantBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Participant</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./participants.js"></script>
+</body>
+</html>
