@@ -267,10 +267,10 @@ export class RequirementsPage {
       const projectId = store.getState().currentProject;
       
       if (this.editingReqId) {
-        await RequirementsService.updateRequirement(this.editingReqId, formData);
+        await requirementsService.updateRequirement(this.editingReqId, formData);
         showToast('Requirement updated', 'success');
       } else {
-        await RequirementsService.createRequirement(projectId, formData);
+        await requirementsService.createRequirement(projectId, formData);
         showToast('Requirement created', 'success');
       }
 
@@ -283,7 +283,7 @@ export class RequirementsPage {
 
   async updateRequirementCategory(reqId, category) {
     try {
-      await RequirementsService.updateRequirement(reqId, { category });
+      await requirementsService.updateRequirement(reqId, { category });
       await this.loadRequirements();
       showToast('Requirement categorized', 'success');
     } catch (error) {
@@ -296,7 +296,7 @@ export class RequirementsPage {
     if (!confirmed) return;
 
     try {
-      await RequirementsService.deleteRequirement(reqId);
+      await requirementsService.deleteRequirement(reqId);
       showToast('Requirement deleted', 'success');
       await this.loadRequirements();
     } catch (error) {
@@ -316,7 +316,7 @@ export class RequirementsPage {
       const projectId = store.getState().currentProject;
       
       for (const row of csv) {
-        await RequirementsService.createRequirement(projectId, {
+        await requirementsService.createRequirement(projectId, {
           description: row.description,
           type: row.type || 'functional',
           priority: row.priority || 'medium',
