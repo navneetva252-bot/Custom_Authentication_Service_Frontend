@@ -18,20 +18,28 @@ class ProductVisionService {
   }
 
   /**
-   * Get all product visions
+   * Get product vision for a project
+   * Backend: /product-vision/get/:projectId (NO list endpoint)
    */
-  async getProductVisions(page = 1, pageSize = 10) {
-    const response = await apiClient.get(
-      `${API_CONFIG.ENDPOINTS.PRODUCT_VISION}/list?page=${page}&pageSize=${pageSize}`
-    );
-    
-    // Check if response was successful
-    if (!response.success) {
-      throw new Error(response.message || 'Failed to fetch product visions');
+  async getProductVisions(projectId = 'all') {
+    try {
+      const response = await apiClient.get(
+        `${API_CONFIG.ENDPOINTS.PRODUCT_VISION}/get/${projectId}`
+      );
+      
+      if (!response.success) {
+        return [];
+      }
+      
+      // Backend returns single object or array
+      if (Array.isArray(response.data)) {
+        return response.data;
+      }
+      return response.data ? [response.data] : [];
+    } catch (error) {
+      console.error('Failed to fetch product visions:', error);
+      return [];
     }
-    
-    // Return the data array
-    return response.data || [];
   }
 
   /**
