@@ -37,7 +37,7 @@ export class ValidationPage {
         return;
       }
 
-      this.requirements = await RequirementsService.getRequirements(projectId);
+      this.requirements = await requirementsService.getRequirements(projectId);
       this.renderValidationProgress();
       this.renderValidationItems();
     } catch (error) {
@@ -165,7 +165,7 @@ export class ValidationPage {
     };
 
     try {
-      await RequirementsService.updateRequirement(req._id, { validationData });
+      await requirementsService.updateRequirement(req._id, { validationData });
       showToast('Validation saved', 'success');
       hideModal('validationModal');
       await this.loadRequirements();
