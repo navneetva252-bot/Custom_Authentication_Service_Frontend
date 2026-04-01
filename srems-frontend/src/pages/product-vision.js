@@ -27,8 +27,9 @@ export class ProductVisionPage {
       container.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><p>Loading product vision documents...</p></div>';
 
       const data = await productVisionService.getProductVisions();
-      this.visions = data.data || data || [];
-      this.filteredVisions = this.visions;
+      // Ensure visions is always an array
+      this.visions = Array.isArray(data) ? data : (data?.data || []);
+      this.filteredVisions = [...this.visions];
       this.renderProductVisions();
     } catch (error) {
       console.error('Failed to load product visions:', error);
@@ -56,13 +57,16 @@ export class ProductVisionPage {
     const container = document.getElementById('productVisionContainer');
     const emptyState = document.getElementById('emptyProductVision');
 
-    if (this.filteredVisions.length === 0) {
+    // Ensure filteredVisions is an array
+    const visions = Array.isArray(this.filteredVisions) ? this.filteredVisions : [];
+
+    if (visions.length === 0) {
       this.showEmptyState();
       return;
     }
 
     emptyState.classList.add('hidden');
-    container.innerHTML = this.filteredVisions.map(item => `
+    container.innerHTML = visions.map(item => `
       <div class="card vision-card">
         <div class="card-header">
           <h3>${item.title || 'Untitled Vision'}</h3>

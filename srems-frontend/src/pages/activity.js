@@ -25,8 +25,9 @@ export class ActivityPage {
   async loadActivities() {
     try {
       const data = await activityTrackerService.getActivities();
-      this.activities = (data.data || data || []);
-      this.filteredActivities = this.activities;
+      // Ensure activities is always an array
+      this.activities = Array.isArray(data) ? data : (data?.data || []);
+      this.filteredActivities = [...this.activities];
       this.renderActivities();
     } catch (error) {
       console.error('Failed to load activities:', error);
@@ -140,7 +141,10 @@ export class ActivityPage {
   groupActivitiesByDate(activities) {
     const groups = {};
     
-    activities.forEach(activity => {
+    // Ensure activities is an array
+    const activitiesArray = Array.isArray(activities) ? activities : [];
+    
+    activitiesArray.forEach(activity => {
       const date = formatDate(activity.timestamp).split(' ')[0]; // Get just the date part
       if (!groups[date]) groups[date] = [];
       groups[date].push(activity);

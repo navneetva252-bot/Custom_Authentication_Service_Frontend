@@ -21,9 +21,17 @@ class ProductVisionService {
    * Get all product visions
    */
   async getProductVisions(page = 1, pageSize = 10) {
-    return apiClient.get(
+    const response = await apiClient.get(
       `${API_CONFIG.ENDPOINTS.PRODUCT_VISION}/list?page=${page}&pageSize=${pageSize}`
     );
+    
+    // Check if response was successful
+    if (!response.success) {
+      throw new Error(response.message || 'Failed to fetch product visions');
+    }
+    
+    // Return the data array
+    return response.data || [];
   }
 
   /**
