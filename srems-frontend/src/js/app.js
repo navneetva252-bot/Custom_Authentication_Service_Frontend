@@ -110,6 +110,7 @@ class App {
       // Initialize UI
       this.setupEventListeners();
       this.setupNavigation();
+      this.updateUserDisplay();
       
       // Subscribe to store changes
       this.store.subscribe((state) => this.onStateChange(state));
@@ -323,7 +324,10 @@ class App {
       'elicitation': './src/pages/elicitation.html',
       'inception': './src/pages/inception.html',
       'product-request': './src/pages/product-request.html',
-      'product-vision': './src/pages/product-vision.html'
+      'product-vision': './src/pages/product-vision.html',
+      'meetings': './src/pages/meetings.html',
+      'participants': './src/pages/participants.html',
+      'comments': './src/pages/comments.html'
     };
 
     const cleanRoute = route.split('?')[0]; // Remove query params
@@ -356,6 +360,9 @@ class App {
       'inception': () => import('../pages/inception.js').then(m => new m.InceptionPage()),
       'product-request': () => import('../pages/product-request.js').then(m => new m.ProductRequestPage()),
       'product-vision': () => import('../pages/product-vision.js').then(m => new m.ProductVisionPage()),
+      'meetings': () => import('../pages/meetings.js').then(m => new m.MeetingsPage()),
+      'participants': () => import('../pages/participants.js').then(m => new m.ParticipantsPage()),
+      'comments': () => import('../pages/comments.js').then(m => new m.CommentsPage()),
       '/': () => import('../pages/dashboard.js').then(m => new m.DashboardPage()),
     };
 
@@ -412,6 +419,7 @@ class App {
    */
   onStateChange(state) {
     // Update UI when state changes
+    this.updateUserDisplay();
     this.updateNotifications(state);
     this.updateModal(state);
     this.updateTheme(state);
@@ -465,8 +473,33 @@ class App {
   }
 
   /**
-   * Show error notification
+   * Update user display name in header
    */
+  updateUserDisplay() {
+    const userNameElement = document.getElementById('user-name');
+    if (!userNameElement) return;
+
+    // Try to get from localStorage first (from signup)
+    let displayName = localStorage.getItem('userName');
+    
+    if (!displayName) {
+      // Fallback: Get email from localStorage and extract username
+      const email = localStorage.getItem('signupEmail');
+      if (email) {
+        displayName = email.split('@')[0]
+          .replace(/[._-]/g, ' ')  // Replace separators with spaces
+          .split(' ')              // Split by spaces
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))  // Capitalize each word
+          .join(' ');              // Join back
+      }
+    }
+    
+    if (displayName) {
+      userNameElement.textContent = displayName;
+    }
+  }
+
+
   showError(message) {
     this.store.addNotification(message, 'error');
   }
@@ -503,20 +536,19 @@ class App {
    * Logout - clear tokens and redirect to login
    */
   logout() {
-    // Clear authentication tokens from localStorage
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('deviceUUID');
-    localStorage.removeItem('deviceName');
+    // Clear all authentication tokens from localStorage
+    localStorage.clear();
+    sessionStorage.clear();
     
     // Clear store
     this.store.logout();
     
-    // Show message and redirect to auth dashboard
+    // Show message and redirect
     showToast('Logged out successfully', 'success');
     
-    // Redirect to Authentication Dashboard
+    // Redirect to project folder's index.html
     setTimeout(() => {
-      window.location.href = 'http://localhost:5500';
+      window.location.href = '/project/index.html';
     }, 1000);
   }
 
