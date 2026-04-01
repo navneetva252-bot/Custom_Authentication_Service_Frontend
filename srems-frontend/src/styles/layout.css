@@ -305,21 +305,49 @@
   gap: var(--spacing-lg);
 }
 
+.page-container {
+  padding: 2rem;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 1.5rem 1rem;
+  }
+}
+
 .page-header {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.page-title-section {
+  flex: 1;
 }
 
 .page-title {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-md);
-  color: var(--color-text);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
 }
 
 .page-subtitle {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-light);
-  margin-bottom: 0;
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
 }
 
 .page-title-section {
@@ -661,4 +689,68 @@
 
 .app-loading.hidden {
   display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+/* FILTERS BAR */
+/* ═══════════════════════════════════════════════════════════════════════════════════ */
+
+.filters-bar {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .filter-group {
+    min-width: auto;
+  }
+}
+
+.filter-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-select,
+.filter-input {
+  padding: var(--spacing-sm) var(--spacing-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  transition: all var(--transition-fast);
+}
+
+.filter-select:focus,
+.filter-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(11, 111, 191, 0.1);
+  background-color: var(--color-bg);
+}
+
+.filter-select {
+  cursor: pointer;
 }
