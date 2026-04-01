@@ -1,7 +1,7 @@
 import { projectsService } from '../js/services/projects.service.js';
 import { store } from '../js/store/store.js';
 import { showToast, showConfirmDialog, showModal, hideModal, debounce, formatDate } from '../js/utils/helpers.js';
-import { validateFormData } from '../js/utils/config.js';
+import { validateFormData, FORM_FIELDS } from '../js/utils/config.js';
 import { PHASES, PROJECT_STATUS, STATUS_COLORS as COLORS } from '../js/utils/constants.js';
 
 export class ProjectsPage {
@@ -19,15 +19,53 @@ export class ProjectsPage {
 
   attachEventListeners() {
     // Create project buttons
-    document.getElementById('btnCreateProject')?.addEventListener('click', () => this.openCreateModal());
-    document.getElementById('btnCreateProjectEmpty')?.addEventListener('click', () => this.openCreateModal());
+    const btnCreateProject = document.getElementById('btnCreateProject');
+    if (btnCreateProject) {
+      btnCreateProject.removeEventListener('click', this.createClickHandler);
+      this.createClickHandler = () => this.openCreateModal();
+      btnCreateProject.addEventListener('click', this.createClickHandler);
+    }
 
-    // Form submission
-    document.getElementById('projectForm')?.addEventListener('submit', (e) => this.handleFormSubmit(e));
+    const btnCreateProjectEmpty = document.getElementById('btnCreateProjectEmpty');
+    if (btnCreateProjectEmpty) {
+      btnCreateProjectEmpty.removeEventListener('click', this.createClickHandler);
+      btnCreateProjectEmpty.addEventListener('click', this.createClickHandler);
+    }
+
+    // Form submission - Remove old listener and add new one
+    const projectForm = document.getElementById('projectForm');
+    if (projectForm) {
+      if (this.formSubmitHandler) {
+        projectForm.removeEventListener('submit', this.formSubmitHandler);
+      }
+      this.formSubmitHandler = (e) => this.handleFormSubmit(e);
+      projectForm.addEventListener('submit', this.formSubmitHandler);
+    }
 
     // Filters
-    document.getElementById('filterStatus')?.addEventListener('change', () => this.applyFilters());
-    document.getElementById('searchProjects')?.addEventListener('input', debounce(() => this.applyFilters(), 300));
+    const filterStatus = document.getElementById('filterStatus');
+    if (filterStatus) {
+      filterStatus.removeEventListener('change', this.filterChangeHandler);
+      this.filterChangeHandler = () => this.applyFilters();
+      filterStatus.addEventListener('change', this.filterChangeHandler);
+    }
+
+    const searchProjects = document.getElementById('searchProjects');
+    if (searchProjects) {
+      searchProjects.removeEventListener('input', this.searchInputHandler);
+      this.searchInputHandler = debounce(() => this.applyFilters(), 300);
+      searchProjects.addEventListener('input', this.searchInputHandler);
+    }
+
+    // Modal close button
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.removeEventListener('click', this.modalCloseHandler);
+      this.modalCloseHandler = (e) => {
+        const modalId = e.currentTarget.getAttribute('data-close-modal');
+        hideModal(modalId);
+      };
+      btn.addEventListener('click', this.modalCloseHandler);
+    });
   }
 
   async loadProjects() {
@@ -85,34 +123,68 @@ export class ProjectsPage {
   }
 
   createProjectCard(project) {
-    const statusBadge = PHASES[project.currentPhase] || project.currentPhase;
-    const statusColor = COLORS.phases[project.currentPhase] || '#6c757d';
-
+    const statusBadge = PHASES[project.currentPhase] || project.currentPhase || 'inception';
+    const statusColor = COLORS.phases?.[project.currentPhase] || '#6c757d';
+    const createdDate = formatDate(project.createdAt) || 'N/A';
+    
     return `
       <div class="project-card" data-project-id="${project._id}">
-        <div class="card-header">
-          <h3 class="card-title">${project.name}</h3>
-          <span class="badge" style="background: ${statusColor};">${statusBadge}</span>
+        <div class="card-header-enhanced">
+          <div class="card-title-section">
+            <h3 class="card-title">${project.name}</h3>
+          </div>
+          <span class="phase-badge" style="background-color: ${statusColor}; color: white;">${statusBadge}</span>
         </div>
+        
         <p class="card-description">${project.description || 'No description'}</p>
-        <div class="card-meta">
-          <div class="meta-item">
-            <span class="meta-label">Manager:</span>
-            <span class="meta-value">${project.projectManager}</span>
+        
+        <div class="card-details-grid">
+          <div class="detail-item">
+            <span class="detail-label">Type</span>
+            <span class="detail-value">${project.projectType ? project.projectType.charAt(0).toUpperCase() + project.projectType.slice(1) : '—'}</span>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Start:</span>
-            <span class="meta-value">${formatDate(project.startDate)}</span>
+          <div class="detail-item">
+            <span class="detail-label">Category</span>
+            <span class="detail-value">${project.projectCategory ? project.projectCategory.replace('_', ' ').charAt(0).toUpperCase() + project.projectCategory.slice(1) : '—'}</span>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Status:</span>
-            <span class="meta-value">${project.projectStatus}</span>
+          <div class="detail-item">
+            <span class="detail-label">Complexity</span>
+            <span class="detail-value">${project.projectComplexity || '—'}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Status</span>
+            <span class="detail-value"><span class="card-status-tag ${project.projectStatus?.toLowerCase()}">${project.projectStatus || 'Active'}</span></span>
           </div>
         </div>
-        <div class="card-actions">
-          <button class="btn btn-sm btn-primary view-project">View</button>
-          <button class="btn btn-sm btn-secondary edit-project">Edit</button>
-          <button class="btn btn-sm btn-danger delete-project">Delete</button>
+        
+        <div class="card-meta-row">
+          <div class="meta-item">
+            <span class="meta-icon">💵</span>
+            <span class="meta-text"><strong>Budget:</strong> $${project.expectedBudget?.toLocaleString() || '0'}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">⏱️</span>
+            <span class="meta-text"><strong>Timeline:</strong> ${project.expectedTimelineInDays || '—'} days</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">📆</span>
+            <span class="meta-text"><strong>Created:</strong> ${createdDate}</span>
+          </div>
+        </div>
+        
+        <div class="card-actions-group">
+          <button class="btn-action view-project" title="View project details">
+            <span class="btn-icon">👁️</span>
+            <span>View</span>
+          </button>
+          <button class="btn-action edit-project" title="Edit project">
+            <span class="btn-icon">✎</span>
+            <span>Edit</span>
+          </button>
+          <button class="btn-action delete-project btn-danger" title="Delete project">
+            <span class="btn-icon">🗑️</span>
+            <span>Delete</span>
+          </button>
         </div>
       </div>
     `;
@@ -133,8 +205,19 @@ export class ProjectsPage {
 
   openCreateModal() {
     this.editingProjectId = null;
+    
+    // Clear form
     document.getElementById('projectForm').reset();
+    
+    // Clear all error messages
+    document.querySelectorAll('.form-error').forEach(error => {
+      error.textContent = '';
+    });
+    
+    // Update title
     document.getElementById('projectModalTitle').textContent = 'Create New Project';
+    
+    // Show modal
     showModal('projectModal');
   }
 
@@ -143,15 +226,27 @@ export class ProjectsPage {
     if (!project) return;
 
     this.editingProjectId = projectId;
+    
+    // Clear all error messages
+    document.querySelectorAll('.form-error').forEach(error => {
+      error.textContent = '';
+    });
+    
+    // Update title
     document.getElementById('projectModalTitle').textContent = 'Edit Project';
     
     document.getElementById('projectName').value = project.name;
     document.getElementById('projectDescription').value = project.description || '';
-    document.getElementById('projectManager').value = project.projectManager;
-    document.getElementById('projectBudget').value = project.budget || '';
-    document.getElementById('startDate').value = project.startDate.split('T')[0];
-    document.getElementById('endDate').value = project.endDate ? project.endDate.split('T')[0] : '';
-    document.getElementById('projectType').value = project.type || '';
+    document.getElementById('problemStatement').value = project.problemStatement || '';
+    document.getElementById('goal').value = project.goal || '';
+    document.getElementById('projectCreationReasonType').value = project.projectCreationReasonType || '';
+    document.getElementById('projectCategory').value = project.projectCategory || '';
+    document.getElementById('projectType').value = project.projectType || '';
+    document.getElementById('expectedBudget').value = project.expectedBudget || '';
+    document.getElementById('expectedTimelineInDays').value = project.expectedTimelineInDays || '';
+    document.getElementById('projectComplexity').value = project.projectComplexity || '';
+    document.getElementById('projectCriticality').value = project.projectCriticality || '';
+    document.getElementById('projectPriority').value = project.projectPriority || '';
     
     showModal('projectModal');
   }
@@ -159,22 +254,61 @@ export class ProjectsPage {
   async handleFormSubmit(event) {
     event.preventDefault();
 
-    const formData = {
-      name: document.getElementById('projectName').value,
-      description: document.getElementById('projectDescription').value,
-      projectManager: document.getElementById('projectManager').value,
-      budget: parseFloat(document.getElementById('projectBudget').value) || 0,
-      startDate: document.getElementById('startDate').value,
-      endDate: document.getElementById('endDate').value,
-      type: document.getElementById('projectType').value,
-    };
+    const formData = {};
+
+    // Always collect core fields
+    const name = document.getElementById('projectName').value.trim();
+    const description = document.getElementById('projectDescription').value.trim();
+    const problemStatement = document.getElementById('problemStatement').value.trim();
+    const goal = document.getElementById('goal').value.trim();
+
+    // For CREATE: all core fields required
+    if (!this.editingProjectId) {
+      formData.name = name;
+      formData.description = description;
+      formData.problemStatement = problemStatement;
+      formData.goal = goal;
+      formData.projectCreationReasonType = document.getElementById('projectCreationReasonType').value;
+      formData.projectCategory = document.getElementById('projectCategory').value;
+      formData.projectType = document.getElementById('projectType').value;
+    } else {
+      // For UPDATE: only send fields that have actually changed
+      if (name) formData.name = name;
+      if (description) formData.description = description;
+      if (problemStatement) formData.problemStatement = problemStatement;
+      if (goal) formData.goal = goal;
+      
+      // Add required update reason
+      formData.projectUpdationReasonType = 'other'; // Default reason for UI-based updates
+    }
+
+    // Add optional fields if they have values (for both CREATE and UPDATE)
+    const expectedBudget = parseFloat(document.getElementById('expectedBudget').value);
+    if (!isNaN(expectedBudget) && expectedBudget > 0) {
+      formData.expectedBudget = Math.floor(expectedBudget);
+    }
+
+    const expectedTimeline = parseInt(document.getElementById('expectedTimelineInDays').value);
+    if (!isNaN(expectedTimeline) && expectedTimeline >= 1 && expectedTimeline <= 120) {
+      formData.expectedTimelineInDays = expectedTimeline;
+    }
+
+    const complexity = document.getElementById('projectComplexity')?.value;
+    if (complexity) formData.projectComplexity = complexity;
+
+    const criticality = document.getElementById('projectCriticality')?.value;
+    if (criticality) formData.projectCriticality = criticality;
+
+    const priority = document.getElementById('projectPriority')?.value;
+    if (priority) formData.projectPriority = priority;
 
     // Validate
-    const errors = validateFormData(formData, 'project');
-    if (errors.length > 0) {
-      errors.forEach(err => {
-        const errorEl = document.getElementById(`error-${err.field}`);
-        if (errorEl) errorEl.textContent = err.message;
+    const form = document.getElementById('projectForm');
+    const validation = validateFormData(form, FORM_FIELDS.CREATE_PROJECT);
+    if (!validation.isValid) {
+      Object.entries(validation.errors).forEach(([fieldId, message]) => {
+        const errorEl = document.getElementById(`error-${fieldId}`);
+        if (errorEl) errorEl.textContent = message;
       });
       return;
     }
@@ -199,23 +333,61 @@ export class ProjectsPage {
   }
 
   async deleteProject(projectId) {
-    const confirmed = await showConfirmDialog(
-      'Delete Project?',
-      'This action cannot be undone. All requirements and data will be deleted.',
-      'Delete',
-      'Cancel'
-    );
-
-    if (!confirmed) return;
-
-    try {
-      showToast('Deleting project...', 'info');
-      await projectsService.deleteProject(projectId);
-      showToast('Project deleted successfully', 'success');
-      await this.loadProjects();
-    } catch (error) {
-      showToast(error.message || 'Failed to delete project', 'error');
+    // Store the projectId for the delete form submission
+    this.projectToDelete = projectId;
+    
+    // Clear the delete form
+    const deleteForm = document.getElementById('deleteProjectForm');
+    if (deleteForm) {
+      deleteForm.reset();
+      deleteForm.querySelectorAll('.form-error').forEach(el => {
+        el.textContent = '';
+      });
     }
+    
+    // Show the delete confirmation modal
+    showModal('deleteProjectModal');
+    
+    // Set up one-time form submission handler
+    const handleDeleteSubmit = async (e) => {
+      e.preventDefault();
+      
+      const reasonType = document.getElementById('deletionReasonType').value;
+      const reasonDescription = document.getElementById('deletionReasonDescription').value;
+      
+      console.log('[DELETE FORM] Reason Type:', reasonType);
+      console.log('[DELETE FORM] Reason Description:', reasonDescription);
+      
+      // Validate reason type
+      if (!reasonType) {
+        const errorEl = document.getElementById('error-deletionReasonType');
+        if (errorEl) {
+          errorEl.textContent = 'Please select a deletion reason';
+        }
+        return;
+      }
+      
+      try {
+        showToast('Deleting project...', 'info');
+        await projectsService.deleteProject(this.projectToDelete, reasonType, reasonDescription);
+        showToast('Project deleted successfully', 'success');
+        hideModal('deleteProjectModal');
+        delete this.projectToDelete;
+        deleteForm.removeEventListener('submit', handleDeleteSubmit);
+        await this.loadProjects();
+      } catch (error) {
+        console.error('[DELETE ERROR]', error);
+        const errorEl = document.getElementById('error-deletionReasonType');
+        if (errorEl) {
+          errorEl.textContent = error.message || 'Failed to delete project';
+        }
+        showToast(error.message || 'Failed to delete project', 'error');
+      }
+    };
+    
+    // Remove any existing listener first
+    deleteForm.removeEventListener('submit', handleDeleteSubmit);
+    deleteForm.addEventListener('submit', handleDeleteSubmit);
   }
 }
 
