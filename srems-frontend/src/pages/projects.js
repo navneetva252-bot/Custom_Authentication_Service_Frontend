@@ -183,10 +183,10 @@ export class ProjectsPage {
       showToast(`${this.editingProjectId ? 'Updating' : 'Creating'} project...`, 'info');
 
       if (this.editingProjectId) {
-        await ProjectsService.updateProject(this.editingProjectId, formData);
+        await projectsService.updateProject(this.editingProjectId, formData);
         showToast('Project updated successfully', 'success');
       } else {
-        const newProject = await ProjectsService.createProject(formData);
+        const newProject = await projectsService.createProject(formData);
         showToast('Project created successfully', 'success');
         store.setCurrentProject(newProject._id);
       }
@@ -210,7 +210,7 @@ export class ProjectsPage {
 
     try {
       showToast('Deleting project...', 'info');
-      await ProjectsService.deleteProject(projectId);
+      await projectsService.deleteProject(projectId);
       showToast('Project deleted successfully', 'success');
       await this.loadProjects();
     } catch (error) {
