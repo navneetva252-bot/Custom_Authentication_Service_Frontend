@@ -33,7 +33,7 @@ export class NegotiationPage {
         return;
       }
 
-      this.requirements = await RequirementsService.getRequirements(projectId);
+      this.requirements = await requirementsService.getRequirements(projectId);
       this.renderVotingSummary();
       this.renderVotingItems();
     } catch (error) {
