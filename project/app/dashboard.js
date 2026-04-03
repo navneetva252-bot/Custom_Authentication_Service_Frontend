@@ -188,6 +188,40 @@ function checkAndShowAdminButton(userType) {
   }
 }
 
+/**
+ * Check user type and show/hide management button
+ * Hide if userType = "USER", show otherwise
+ */
+function checkAndShowManagementButton(userType) {
+  const managementBtn = document.getElementById("goToSoftwareBtn");
+  
+  console.log("📊 checkAndShowManagementButton() called");
+  console.log("   Button element:", managementBtn);
+  
+  if (!managementBtn) {
+    console.warn("⚠️ Management button element not found in DOM!");
+    return;
+  }
+  
+  console.log("🔍 Management Check Logic:");
+  console.log("   userType value:", userType);
+  console.log("   userType === 'USER'?", userType === "USER");
+  
+  // Hide button if userType is "USER", show otherwise
+  const isStandardUser = userType === "USER";
+  console.log("   RESULT - Is Standard USER?", isStandardUser);
+  
+  if (isStandardUser) {
+    console.log("❌ User is STANDARD USER - HIDING management button");
+    managementBtn.style.display = "none";
+    console.log("   Button display style set to:", managementBtn.style.display);
+  } else {
+    console.log("✅ User is NOT standard USER - SHOWING management button");
+    managementBtn.style.display = "flex";
+    console.log("   Button display style set to:", managementBtn.style.display);
+  }
+}
+
 // ===== NOTIFICATIONS SYSTEM =====
 let notifications = [
   {
@@ -624,6 +658,11 @@ async function loadAccount() {
     console.log("📢 About to call checkAndShowAdminButton with userType:", userType);
     checkAndShowAdminButton(userType);
     console.log("✅ checkAndShowAdminButton completed");
+    
+    // Check and show management button based on user type
+    console.log("📢 About to call checkAndShowManagementButton with userType:", userType);
+    checkAndShowManagementButton(userType);
+    console.log("✅ checkAndShowManagementButton completed");
     
     // Show page with staggered animations
     showPageContent();
