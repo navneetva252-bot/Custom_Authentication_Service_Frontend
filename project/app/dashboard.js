@@ -124,6 +124,70 @@ function goToSoftwareManagement() {
   window.location.href = "http://127.0.0.1:5500/srems-frontend/index.html#/";
 }
 
+/**
+ * Navigate to Admin Panel
+ * Validates token and device UUID before redirecting
+ */
+function goToAdminPanel() {
+  const token = localStorage.getItem("accessToken");
+  const deviceUUID = localStorage.getItem("deviceUUID");
+  
+  if (!token) {
+    console.warn("❌ No authentication token found");
+    alert("❌ Session expired. Please login again.");
+    window.location.href = "./login.html";
+    return;
+  }
+  
+  if (!deviceUUID) {
+    console.warn("❌ Device not registered");
+    alert("❌ Device not registered. Please refresh the page.");
+    return;
+  }
+  
+  console.log("✅ Redirecting to Admin Panel");
+  console.log("   Token length:", token.length);
+  console.log("   Device UUID:", deviceUUID);
+  
+  // Redirect to Admin Panel
+  window.location.href = "http://127.0.0.1:5500/admin-panel/index.html";
+}
+
+/**
+ * Check user type and show admin button if user is admin
+ * Admin = NOT "USER" and NOT "CLIENT"
+ */
+function checkAndShowAdminButton(userType) {
+  const adminBtn = document.getElementById("goToAdminPanelBtn");
+  
+  console.log("🔐 checkAndShowAdminButton() called");
+  console.log("   Button element:", adminBtn);
+  
+  if (!adminBtn) {
+    console.warn("⚠️ Admin button element not found in DOM!");
+    return;
+  }
+  
+  console.log("🔍 Admin Check Logic:");
+  console.log("   userType value:", userType);
+  console.log("   userType === 'USER'?", userType === "USER");
+  console.log("   userType === 'CLIENT'?", userType === "CLIENT");
+  
+  // Show button if userType is NOT "USER" and NOT "CLIENT"
+  const isAdmin = userType !== "USER" && userType !== "CLIENT";
+  console.log("   RESULT - Is Admin?", isAdmin);
+  
+  if (isAdmin) {
+    console.log("✅ User is ADMIN - SHOWING button");
+    adminBtn.style.display = "flex";
+    console.log("   Button display style set to:", adminBtn.style.display);
+  } else {
+    console.log("❌ User is NOT admin - HIDING button");
+    adminBtn.style.display = "none";
+    console.log("   Button display style set to:", adminBtn.style.display);
+  }
+}
+
 // ===== NOTIFICATIONS SYSTEM =====
 let notifications = [
   {
@@ -283,15 +347,15 @@ async function loadAccount() {
   const accountInfo = document.getElementById("accountInfo");
   const accountStatus = document.getElementById("accountStatus");
   
-  // If account elements don't exist, just show the page (marketing layout)
-  if (!accountInfo || !accountStatus) {
-    console.log("⚠️ Account elements not found - showing page with marketing content");
-    showPageContent();
-    return;
-  }
+  const hasAccountSection = accountInfo && accountStatus;
   
-  // Show loading state
-  accountInfo.innerHTML = `<div style="text-align: center; padding: 20px; color: #667eea;">Loading account information...</div>`;
+  if (hasAccountSection) {
+    // Show loading state if account section exists
+    accountInfo.innerHTML = `<div style="text-align: center; padding: 20px; color: #667eea;">Loading account information...</div>`;
+    console.log("📦 Account section found - will render account info");
+  } else {
+    console.log("⚠️ Account elements not found - will still check admin status for navbar button");
+  }
   
   try {
     const endpoint = `${API_BASE}/auth/me`;
@@ -327,6 +391,12 @@ async function loadAccount() {
 
     // ===== PARSE BACKEND RESPONSE - Handle Different Key Names =====
     const backendData = data.data;
+    
+    // Debug: Log all backend fields to see what we're getting
+    console.log("🔍 All backend fields received:");
+    Object.keys(backendData).forEach(key => {
+      console.log(`   ✓ "${key}" = "${backendData[key]}"`);
+    });
     
     // Extract values from backend response (it uses different key names!)
     const firstName = backendData["First Name"] || "—";
@@ -368,12 +438,20 @@ async function loadAccount() {
     const createdAt = new Date(backendData["Account Created At"]);
     const lastLoginAt = backendData["Last Login At"] ? new Date(backendData["Last Login At"]) : null;
     
-    console.log("✅ Parsed data:", { firstName, email, phone, isActive, isEmailVerified, isTwoFaEnabled });
+    // Extract User Type from backend response
+    const userType = backendData["userType"] || "USER";  // ✅ Changed from "User Type" to "userType"
+    console.log("👤 User Type value:", userType);
+    console.log("   Is Admin Check: userType !== 'USER' && userType !== 'CLIENT'");
+    console.log("   Result:", userType !== "USER" && userType !== "CLIENT");
     
-    // Update status badge
-    accountStatus.textContent = isActive ? "✓ Active" : "⚠ Inactive";
-    accountStatus.style.background = isActive ? "#dcfce7" : "#fef08a";
-    accountStatus.style.color = isActive ? "#166534" : "#854d0e";
+    console.log("✅ Parsed data:", { firstName, email, phone, isActive, isEmailVerified, isTwoFaEnabled, userType });
+    
+    // Update status badge (only if element exists)
+    if (accountStatus) {
+      accountStatus.textContent = isActive ? "✓ Active" : "⚠ Inactive";
+      accountStatus.style.background = isActive ? "#dcfce7" : "#fef08a";
+      accountStatus.style.color = isActive ? "#166534" : "#854d0e";
+    }
     
     // ===== CALCULATE AND UPDATE HEALTH SCORE =====
     const healthScoreEl = document.getElementById("healthScore");
@@ -473,39 +551,48 @@ async function loadAccount() {
       console.log("✅ Health score calculated:", score + "%");
     }
     
-    // Render account information
-    accountInfo.innerHTML = `
-      <div class="info-row">
-        <div>
-          <p>Name</p>
-          <strong>${firstName}</strong>
+    // Render account information (only if section exists)
+    if (accountInfo && accountStatus) {
+      // Update status badge
+      accountStatus.textContent = isActive ? "✓ Active" : "⚠ Inactive";
+      accountStatus.style.background = isActive ? "#dcfce7" : "#fef08a";
+      accountStatus.style.color = isActive ? "#166534" : "#854d0e";
+      
+      accountInfo.innerHTML = `
+        <div class="info-row">
+          <div>
+            <p>Name</p>
+            <strong>${firstName}</strong>
+          </div>
+          <div>
+            <p>Email</p>
+            <strong>${email}</strong>
+          </div>
+          <div>
+            <p>Phone</p>
+            <strong>${phone}</strong>
+          </div>
         </div>
-        <div>
-          <p>Email</p>
-          <strong>${email}</strong>
+        <div class="info-row">
+          <div>
+            <p>User ID</p>
+            <strong style="font-size: 12px; font-family: monospace;">${userId}</strong>
+          </div>
+          <div>
+            <p>Status</p>
+            <strong>${isActive ? '🟢 Active' : '🔴 Inactive'}</strong>
+          </div>
+          <div>
+            <p>Email Verified</p>
+            <strong>${isEmailVerified ? '✅ Yes' : '❌ No'}</strong>
+          </div>
         </div>
-        <div>
-          <p>Phone</p>
-          <strong>${phone}</strong>
-        </div>
-      </div>
-      <div class="info-row">
-        <div>
-          <p>User ID</p>
-          <strong style="font-size: 12px; font-family: monospace;">${userId}</strong>
-        </div>
-        <div>
-          <p>Status</p>
-          <strong>${isActive ? '🟢 Active' : '🔴 Inactive'}</strong>
-        </div>
-        <div>
-          <p>Email Verified</p>
-          <strong>${isEmailVerified ? '✅ Yes' : '❌ No'}</strong>
-        </div>
-      </div>
-    `;
-    
-    console.log("✅ Account information rendered successfully");
+      `;
+      
+      console.log("✅ Account information rendered successfully");
+    } else {
+      console.log("⚠️ Skipping account info rendering - elements not in DOM");
+    }
     
     // Update created date if element exists
     const createdDateEl = document.getElementById("createdDate");
@@ -533,12 +620,19 @@ async function loadAccount() {
     // Load active sessions count
     loadSessionsCount();
     
+    // Check and show admin button if user is admin
+    console.log("📢 About to call checkAndShowAdminButton with userType:", userType);
+    checkAndShowAdminButton(userType);
+    console.log("✅ checkAndShowAdminButton completed");
+    
     // Show page with staggered animations
     showPageContent();
     
   } catch (err) {
     console.error("Error loading account:", err);
-    accountInfo.innerHTML = `<div style="color: red; padding: 20px;">Error: ${err.message}</div>`;
+    if (accountInfo) {
+      accountInfo.innerHTML = `<div style="color: red; padding: 20px;">Error: ${err.message}</div>`;
+    }
     
     // Show page even on error
     showPageContent();
@@ -628,6 +722,18 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("👤 Profile clicked");
       window.location.href = "settings.html";
     });
+  }
+  
+  // Setup Admin Panel Button in Nav
+  const adminBtn = document.getElementById("goToAdminPanelBtn");
+  if (adminBtn) {
+    adminBtn.addEventListener("click", () => {
+      console.log("🔐 Admin Panel button clicked");
+      goToAdminPanel();
+    });
+    console.log("✅ Admin button listener attached");
+  } else {
+    console.warn("⚠️ Admin button not found (element id: goToAdminPanelBtn)");
   }
   
   // Setup Software Management Button in Nav
